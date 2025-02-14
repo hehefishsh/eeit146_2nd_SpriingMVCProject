@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打卡系統</title>
+        <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 400px;
+        }
+
+        .clock {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .button-group button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .button-group button.subtle {
+            background-color: #7f8c8d;
+        }
+
+        .button-group button.subtle:hover {
+            background-color: #5d6d6e;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .success::before {
+            content: "✓ ";
+        }
+
+        .error {
+            color: red;
+        }
+
+        .error::before {
+            content: "✗ ";
+        }
+
+        .subtle {
+            color: #7f8c8d;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="card">
+        <h1>打卡系統</h1>
+
+        <!-- 時鐘顯示 -->
+        <div class="clock">
+            <span id="clock-time" th:text="${currentTime}">--:--:--</span>
+        </div>
+
+        <!-- 上班/下班 打卡按鈕 -->
+        <div class="button-group">
+            <form th:action="@{/clock}" method="post">
+                <input type="hidden" name="clockTypeId" value="1">
+                <button type="submit">上班打卡</button>
+            </form>
+            <form th:action="@{/clock}" method="post">
+                <input type="hidden" name="clockTypeId" value="2">
+                <button type="submit">下班打卡</button>
+            </form>
+        </div>
+
+        <!-- 外出/外出結束 打卡按鈕 -->
+        <div class="button-group">
+            <form th:action="@{/clock}" method="post">
+                <input type="hidden" name="clockTypeId" value="5">
+                <button type="submit" class="subtle">外出打卡</button>
+            </form>
+            <form th:action="@{/clock}" method="post">
+                <input type="hidden" name="clockTypeId" value="6">
+                <button type="submit" class="subtle">外出結束</button>
+            </form>
+        </div>
+
+        <!-- 顯示打卡成功訊息 -->
+        <div th:if="${message}" class="success-message">
+            <p th:text="${message}"></p>
+        </div>
+    </div>
+
+    <!-- 時鐘更新 Script -->
+    <script>
+        function updateClock() {
+            const clockTime = document.getElementById('clock-time');
+            const currentTime = new Date().toLocaleTimeString();
+            clockTime.textContent = currentTime;
+        }
+
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登入系統</title>
+  <style>
+      body {
+          font-family: 'Roboto', sans-serif;
+          background-color: #f2f2f2;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+      }
+
+      .card {
+          background-color: #fff;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          padding: 40px;
+          border-radius: 15px;
+          text-align: center;
+          width: 400px;
+          transition: transform 0.2s;
+      }
+
+      .card:hover {
+          transform: scale(1.02);
+      }
+
+      h1 {
+          margin-bottom: 20px;
+          color: #333;
+          font-weight: 700;
+      }
+
+      input[type="text"], input[type="password"] {
+      	  justify-content:center;
+          width: 100%;
+          padding: 12px;
+          margin: 10px 0;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 16px;
+          transition: border-color 0.3s;
+      }
+
+      input:focus {
+          border-color: #007bff;
+          outline: none;
+      }
+
+      button {
+          background-color: #007bff;
+          color: white;
+          padding: 12px 24px;
+          border: none;
+          border-radius: 20px;
+          cursor: pointer;
+          font-size: 16px;
+          width: 100%;
+          margin-top: 10px;
+          transition: background-color 0.3s ease, transform 0.2s;
+      }
+
+      button:hover {
+          background-color: #0056b3;
+          transform: translateY(-2px);
+      }
+
+      .error {
+          color: red;
+          margin-top: 10px;
+          font-size: 14px;
+      }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="card">
+      <h1>登入系統</h1>
+      <form th:action="@{/perform_login}" method="post">
+          <input type="text" name="username" placeholder="員工姓名" required>
+          <input type="password" name="password" placeholder="密碼" required>
+          <button type="submit">登入</button>
+      </form>
+      <p th:if="${error}" class="error" th:text="${error}"></p>
+  </div>
+</body>
+</html>
