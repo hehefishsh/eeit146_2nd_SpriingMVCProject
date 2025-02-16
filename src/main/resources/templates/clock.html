@@ -33,6 +33,7 @@
     <link href="/images/favicon.svg" rel="shortcut icon" />
 
     <script src="/plugins/nprogress/nprogress.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <style>
 body {
 	font-family: 'Roboto', sans-serif;
@@ -56,8 +57,7 @@ body {
 .clock {
 	font-size: 4rem;
 	font-weight: bold;
-	color: #e74c3c;
-	margin-bottom: 20px;
+	color: #333;
 }
 
 .button-group {
@@ -68,28 +68,28 @@ body {
 }
 
 .button-group button {
-	background-color: #007bff;
-	color: white;
+/* 	background-color: #9e6de0; */
+/* 	color: white; */
 	padding: 12px 24px;
-	border: none;
-	border-radius: 20px;
+/* 	border: none; */
+/* 	border-radius: 20px; */
 	cursor: pointer;
 	font-size: 16px;
 	margin: 0 10px;
-	transition: background-color 0.3s ease;
+/* 	transition: background-color 0.3s ease; */
 }
 
-.button-group button:hover {
-	background-color: #0056b3;
-}
+/* .button-group button:hover { */
+/* 	background-color: #742ed3; */
+/* } */
 
-.button-group button.subtle {
-	background-color: #7f8c8d;
-}
+/* .button-group button.subtle { */
+/* 	background-color: #7f8c8d; */
+/* } */
 
-.button-group button.subtle:hover {
-	background-color: #5d6d6e;
-}
+/* .button-group button.subtle:hover { */
+/* 	background-color: #5d6d6e; */
+/* } */
 
 .status {
 	margin-top: 10px;
@@ -136,18 +136,18 @@ body {
 
 					<!-- 時鐘顯示 -->
 					<div class="clock">
-						<span id="clock-time" th:text="${currentTime}">--:--:--</span>
+							<canvas id="clock-canvas"></canvas>
 					</div>
 
 					<!-- 上班/下班 打卡按鈕 -->
 					<div class="button-group">
 						<form th:action="@{/clock}" method="post">
 							<input type="hidden" name="clockTypeId" value="1">
-							<button type="submit">上班打卡</button>
+							<button type="submit" class="mb-1 btn btn-pill btn-primary">上班打卡</button>
 						</form>
 						<form th:action="@{/clock}" method="post">
 							<input type="hidden" name="clockTypeId" value="2">
-							<button type="submit">下班打卡</button>
+							<button type="submit" class="mb-1 btn btn-pill btn-primary">下班打卡</button>
 						</form>
 					</div>
 
@@ -155,18 +155,24 @@ body {
 					<div class="button-group">
 						<form th:action="@{/clock}" method="post">
 							<input type="hidden" name="clockTypeId" value="5">
-							<button type="submit" class="subtle">外出打卡</button>
+							<button type="submit" class="mb-1 btn btn-outline-primary btn-pill">外出打卡</button>
 						</form>
 						<form th:action="@{/clock}" method="post">
 							<input type="hidden" name="clockTypeId" value="6">
-							<button type="submit" class="subtle">外出結束</button>
+							<button type="submit" class="mb-1 btn btn-outline-primary btn-pill">外出結束</button>
 						</form>
 					</div>
-
-					<!-- 顯示打卡成功訊息 -->
-					<div th:if="${message}" class="success-message">
-						<p th:text="${message}"></p>
+					<div th:if="${errorMessage}">
+    					<div class="alert alert-danger" th:text="${errorMessage}"></div>
 					</div>
+					<!-- 顯示打卡成功訊息 -->
+					<div th:if="${message}">
+    				<div class="alert alert-success" th:text="${message}"></div>
+					</div>
+					<br>
+					<div>
+					<a th:href="@{/attendancelogs}"><button type="button" class="mb-1 btn btn-pill btn-success">出勤記錄查詢</button></a>
+					 </div>
 				</div>
 
 			</div>
@@ -175,6 +181,51 @@ body {
 
 
 	</div>
+
+
+
+
+
+<script>
+  const canvas = document.getElementById('clock-canvas');
+  const ctx = canvas.getContext('2d');
+
+  // 自動調整 Canvas 大小
+  function resizeCanvas() {
+    const parentWidth = canvas.parentElement.clientWidth;
+    const parentHeight = canvas.parentElement.clientHeight;
+
+    canvas.width = parentWidth * 0.9;  // 留些間距
+    canvas.height = parentHeight * 0.6;
+
+    // 動態調整字體大小 (依據 Canvas 寬度)
+    ctx.font = `${canvas.width / 5}px Roboto`;
+  }
+
+  // 更新時間
+  function updateCanvasClock() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const currentDate = new Date();
+    const timeString = currentDate.toLocaleTimeString([], { hour12: false });
+
+    ctx.fillText(timeString, canvas.width / 2, canvas.height / 2);
+  }
+
+  // 初始化
+  resizeCanvas();
+  setInterval(updateCanvasClock, 1000); // 每秒更新一次
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    updateCanvasClock();
+  });
+</script>
+
+
+
 </body>
 
 
