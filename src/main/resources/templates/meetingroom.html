@@ -30,7 +30,7 @@
     <link id="main-css-href" rel="stylesheet" href="css/style.css" />
 
     <!-- FAVICON -->
-    <link href="/images/favicon.png" rel="shortcut icon" />
+    <link href="/images/favicon.svg" rel="shortcut icon" />
 
     <script src="/plugins/nprogress/nprogress.js"></script>
 
@@ -38,7 +38,7 @@
 
 
 <body class="navbar-fixed sidebar-fixed" id="body">
-<div th:replace="~{headerAndLeftside.html}">
+<div th:replace="~{headerAndLeftside.html(pageHtml='meetingroom')}">
 <th:block th:fragment="contentTitle">
 <!-- 輸入頁面標題 -->會議室管理
 </th:block>
