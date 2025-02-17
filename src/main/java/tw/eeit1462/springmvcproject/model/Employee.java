@@ -1,11 +1,18 @@
 package tw.eeit1462.springmvcproject.model;
-import jakarta.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "employee")
@@ -36,7 +43,21 @@ public class Employee implements UserDetails {
     @JoinColumn(name = "status_id")
     private Status status;
 
-    @Override
+	public Employee() {
+		super();
+	}
+
+	public Employee(String employeeName, String password, Position position, Department department, String hireDate,
+			Status status) {
+		this.employeeName = employeeName;
+		this.password = password;
+		this.position = position;
+		this.department = department;
+		this.hireDate = hireDate;
+		this.status = status;
+	}
+
+	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList(); // 暫時不需要角色權限
     }
@@ -70,6 +91,13 @@ public class Employee implements UserDetails {
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return password;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", password=" + password
+				+ ", position=" + position + ", department=" + department + ", hireDate=" + hireDate + ", status="
+				+ status + "]";
 	}
 
 	public int getEmployeeId() {

@@ -42,8 +42,8 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(EmployeeRepository employeeRepository) {
-        return username -> employeeRepository.findByEmployeeName(username)
-            .orElseThrow(() -> new UsernameNotFoundException("用戶未找到: " + username));
+		return employeeId -> employeeRepository.findById(Integer.valueOf(employeeId))
+				.orElseThrow(() -> new UsernameNotFoundException("用戶未找到: " + employeeId));
     }
 
     @Bean
