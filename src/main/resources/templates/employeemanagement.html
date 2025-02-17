@@ -3,44 +3,72 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>員工管理</title>
+<title>員工管理</title>
 
-    <!-- GOOGLE FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
-    <link href="plugins/material/css/materialdesignicons.min.css" rel="stylesheet" />
-    <link href="plugins/simplebar/simplebar.css" rel="stylesheet" />
+<!-- GOOGLE FONTS -->
+<link
+	href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto"
+	rel="stylesheet">
+<link href="plugins/material/css/materialdesignicons.min.css"
+	rel="stylesheet" />
+<link href="plugins/simplebar/simplebar.css" rel="stylesheet" />
 
-    <!-- PLUGINS CSS STYLE -->
-    <link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
+<!-- PLUGINS CSS STYLE -->
+<link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
 
-    <link href="plugins/prism/prism.css" rel="stylesheet" />
+<link href="plugins/prism/prism.css" rel="stylesheet" />
 
-    <!-- MONO CSS -->
-    <link id="main-css-href" rel="stylesheet" href="css/style.css" />
+<!-- MONO CSS -->
+<link id="main-css-href" rel="stylesheet" href="css/style.css" />
 
-    <!-- FAVICON -->
-    <link href="/images/favicon.svg" rel="shortcut icon" />
+<!-- FAVICON -->
+<link href="/images/favicon.svg" rel="shortcut icon" />
 
-    <script src="/plugins/nprogress/nprogress.js"></script>
+<script src="/plugins/nprogress/nprogress.js"></script>
 
 </head>
 
 <body class="navbar-fixed sidebar-fixed" id="body">
-<div th:replace="~{headerAndLeftside.html(pageHtml='employeemanagement')}">
-<th:block th:fragment="contentTitle">
-<!-- 輸入頁面標題 -->員工管理
-</th:block>
-<th:block th:fragment="content">
-<!-- 輸入頁面內容 -->
-頁面內容
-</th:block>
+	<div
+		th:replace="~{headerAndLeftside.html(pageHtml='employeemanagement')}">
+		<th:block th:fragment="contentTitle">
+			<!-- 輸入頁面標題 -->員工管理
+		</th:block>
+		<th:block th:fragment="content">
+			<!-- 輸入頁面內容 -->
+			<table border="1">
+				<thead>
+					<tr>
+						<th>員工ID</th>
+						<th>姓名</th>
+						<th>職位</th>
+						<th>部門</th>
+						<th>入職時間</th>
+						<th>狀態</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 使用 th:each 循環顯示每個員工 -->
+					<tr th:each="employee : ${employees}">
+						<td th:text="${employee.employeeId}">員工ID</td>
+						<td th:text="${employee.employeeName}">姓名</td>
+						<td th:text="${employee.department.departmentName}">部門</td>
+						<td th:text="${employee.position.positionName}">職位</td>
+						<td th:text="${employee.hireDate}">入職時間</td>
+						<td th:text="${employee.status.statusName}">狀態</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			
+			<a th:href="@{/employeecreate}"><button>新增員工</button></a>
 
-
-</div>
+		</th:block>
+	</div>
 </body>
 
 </html>

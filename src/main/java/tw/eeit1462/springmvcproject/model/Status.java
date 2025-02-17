@@ -1,6 +1,14 @@
 package tw.eeit1462.springmvcproject.model;
-import jakarta.persistence.*;
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "status")
@@ -17,6 +25,15 @@ public class Status {
 
     @OneToMany(mappedBy = "status", cascade = CascadeType.ALL)
     private List<Employee> employees;
+
+	public Status() {
+	}
+
+	public Status(Integer statusId, String statusName) {
+		this.statusId = statusId;
+		this.statusName = statusName;
+	}
+
 
 	public Integer getStatusId() {
 		return statusId;
