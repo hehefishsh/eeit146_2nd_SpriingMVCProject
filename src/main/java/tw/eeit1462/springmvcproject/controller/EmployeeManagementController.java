@@ -39,12 +39,12 @@ public class EmployeeManagementController {
         return "employeemanagement"; 
     }
 
-	@GetMapping("/employeedetail")
+	@GetMapping("/employee/detail")
 	public String showEmployeeDetail(Model model) {
 		return "employeedetail";
 	}
 
-	@GetMapping("/employeecreate")
+	@GetMapping("/employee/create")
 	public String showEmployeeCreate(Model model) {
 		List<Department> departments = departmentService.findAllDepartment();
 		model.addAttribute("departments", departments);
@@ -53,7 +53,7 @@ public class EmployeeManagementController {
 		return "employeecreate";
 	}
 
-	@PostMapping("/createemployee")
+	@PostMapping("/employeecreate")
 	public String CreateEmployee(Model model, String employeeName, String password, String positionid,
 			String departmentid, String startDate) {
 		System.out.println(employeeName);
@@ -73,6 +73,6 @@ public class EmployeeManagementController {
 		employeeService.createEmployee(employee);
 		List<Employee> employees = employeeService.findAllEmployee();
 		model.addAttribute("employees", employees);
-		return "employeemanagement";
+		return "redirect:/employeemanagement";
 	}
 }
