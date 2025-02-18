@@ -43,7 +43,22 @@
 </th:block>
 <th:block th:fragment="content">
 <!-- 輸入頁面內容 -->
-頁面內容
+<table border="1">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>標題</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 使用 th:each 循環顯示每個員工 -->
+					<tr th:each="guideline : ${allGuideline}">
+						<td th:text="${guideline.guideId}">ID</td>
+						<td th:text="${guideline.guideTitle}">標題</td>
+					</tr>
+				</tbody>
+			</table>
+			
 </th:block>
 
 
