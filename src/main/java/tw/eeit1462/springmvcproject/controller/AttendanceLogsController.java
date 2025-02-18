@@ -6,23 +6,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import tw.eeit1462.springmvcproject.model.Attendance;
-import tw.eeit1462.springmvcproject.model.AttendanceLogs;
 import tw.eeit1462.springmvcproject.model.Employee;
-import tw.eeit1462.springmvcproject.service.AttendanceLogsService;
 import tw.eeit1462.springmvcproject.service.AttendanceService;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Controller
 public class AttendanceLogsController {
 
-    @Autowired
-    private AttendanceLogsService attendanceLogsService;
-    
     @Autowired
     private AttendanceService attendanceService;
 

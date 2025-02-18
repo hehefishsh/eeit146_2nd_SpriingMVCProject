@@ -9,26 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tw.eeit1462.springmvcproject.model.Attendance;
-import tw.eeit1462.springmvcproject.model.AttendanceLogs;
 import tw.eeit1462.springmvcproject.model.AttendanceViolation;
 import tw.eeit1462.springmvcproject.model.Employee;
-import tw.eeit1462.springmvcproject.model.ShiftType;
-import tw.eeit1462.springmvcproject.model.Status;
-import tw.eeit1462.springmvcproject.model.Type;
-import tw.eeit1462.springmvcproject.repository.AttendanceLogsRepository;
 import tw.eeit1462.springmvcproject.repository.AttendanceRepository;
 import tw.eeit1462.springmvcproject.repository.AttendanceViolationRepository;
 import tw.eeit1462.springmvcproject.repository.EmployeeRepository;
-import tw.eeit1462.springmvcproject.repository.ScheduleRepository;
-import tw.eeit1462.springmvcproject.repository.StatusRepository;
-import tw.eeit1462.springmvcproject.repository.TypeRepository;
 
 @Service
 @Transactional
 public class AttendanceService {
-
-    @Autowired
-    private AttendanceLogsRepository attendanceLogsRepository;
 
     @Autowired
     private AttendanceRepository attendanceRepository;
@@ -36,17 +25,6 @@ public class AttendanceService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Autowired
-    private TypeRepository typeRepository;
-
-    @Autowired
-    private StatusRepository statusRepository;
-
-    @Autowired
-    private ScheduleRepository scheduleRepository;
-
-    @Autowired
-    private AttendanceViolationRepository attendanceViolationRepository;
 
     @Autowired
     private AttendanceViolationRepository attendanceViolationsRepository;  // 需要額外的 Repository

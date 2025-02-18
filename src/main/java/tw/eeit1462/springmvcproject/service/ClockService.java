@@ -24,7 +24,7 @@ import tw.eeit1462.springmvcproject.repository.TypeRepository;
 
 @Service
 @Transactional
-public class AttendanceLogsService {
+public class ClockService {
 
     @Autowired
     private AttendanceLogsRepository attendanceLogsRepository;
@@ -83,18 +83,30 @@ public class AttendanceLogsService {
         if (exceptionMessage != null) {
             long violationMinutes = 0;
             LocalDateTime now = LocalDateTime.now();
+            // 修正班別開始時間，讓它變成今天的日期
+            LocalDateTime shiftStartTime = LocalDate.now().atTime(shiftType.getStartTime().toLocalTime());
+            LocalDateTime shiftEndTime = LocalDate.now().atTime(shiftType.getEndTime().toLocalTime());
+
             // 依據異常類型計算違規分鐘數
             if ("遲到".equals(exceptionMessage)) {
-                // 違規分鐘數 = 寬限期結束後與實際打卡時間之差
-                violationMinutes = Duration.between(shiftType.getStartTime().plusMinutes(10), now).toMinutes();
+                LocalDateTime expectedClockInTime = shiftStartTime.plusMinutes(10);
+                System.out.println("班別開始時間：" + shiftStartTime);
+                
+                // 確保 `now` 晚於 `expectedClockInTime`，才計算違規分鐘數
+                if (now.isAfter(expectedClockInTime)) {
+                    violationMinutes = Duration.between(expectedClockInTime, now).toMinutes();
+                    System.out.println(violationMinutes);
+                } else {
+                    violationMinutes = 0;
+                }
             } else if ("早退".equals(exceptionMessage)) {
-                violationMinutes = Duration.between(now, shiftType.getEndTime().minusMinutes(10)).toMinutes();
+                violationMinutes = Duration.between(now, shiftEndTime.minusMinutes(10)).toMinutes();
             } else if ("非上班時間".equals(exceptionMessage)) {
                 // 表定上班前1小時與實際打卡時間之差
-                violationMinutes = Math.abs(Duration.between(now, shiftType.getStartTime().minusHours(1)).toMinutes());
+                violationMinutes = Math.abs(Duration.between(now, shiftStartTime.minusHours(1)).toMinutes());
             } else {
                 // 重複打卡、缺外出結束、非外出打卡時間、缺外出打卡---預設違規分鐘數
-                violationMinutes = 10;
+                violationMinutes = 0;
             }
 
             // 注意：此處使用 exceptionMessage 作為查詢條件，請確保資料中該欄位值唯一
@@ -129,6 +141,9 @@ public class AttendanceLogsService {
         LocalDateTime endOfDay = startOfDay.plusDays(1);
         List<AttendanceLogs> logsToday = attendanceLogsRepository
             .findByEmployee_EmployeeIdAndClockTimeBetween(employeeId, startOfDay, endOfDay);
+        // 修正班別開始時間，讓它變成今天的日期
+        LocalDateTime shiftStartTime = LocalDate.now().atTime(shiftType.getStartTime().toLocalTime());
+        LocalDateTime shiftEndTime = LocalDate.now().atTime(shiftType.getEndTime().toLocalTime());
 
         // 檢查上班打卡：重複打卡、打卡過早、遲到
         if (clockType.getTypeName().equals("上班") &&
@@ -136,11 +151,11 @@ public class AttendanceLogsService {
             return "重複打卡";
         } else if (clockType.getTypeName().equals("上班")) {
             // 檢查上班打卡必須在表定上班前1小時內
-            if (LocalDateTime.now().isBefore(shiftType.getStartTime().minusHours(1))) {
+            if (LocalDateTime.now().isBefore(shiftStartTime.minusHours(1))) {
                 return "非上班時間";
             }
             // 檢查遲到：若打卡時間晚於表定開始時間+10分鐘寬限期
-            if (LocalDateTime.now().isAfter(shiftType.getStartTime().plusMinutes(10))) {
+            if (LocalDateTime.now().isAfter(shiftStartTime.plusMinutes(10))) {
                 return "遲到";
             }
         }
@@ -149,7 +164,7 @@ public class AttendanceLogsService {
                  logsToday.stream().anyMatch(log -> log.getClockType().getTypeName().equals("下班"))) {
             return "重複打卡";
         } else if (clockType.getTypeName().equals("下班")) {
-            if (LocalDateTime.now().isBefore(shiftType.getEndTime().minusMinutes(10))) {
+            if (LocalDateTime.now().isBefore(shiftEndTime.minusMinutes(10))) {
                 return "早退";
             }
             // 若打下班前有未結束的外出打卡
