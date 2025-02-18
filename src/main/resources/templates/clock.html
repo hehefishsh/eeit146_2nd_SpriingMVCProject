@@ -1,142 +1,232 @@
 <!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>打卡系統</title>
-        <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        .card {
-            background-color: #fff;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            width: 400px;
-        }
+    <title>打卡</title>
 
-        .clock {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #e74c3c;
-            margin-bottom: 20px;
-        }
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
+    <link href="plugins/material/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="plugins/simplebar/simplebar.css" rel="stylesheet" />
 
-        .button-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+    <!-- PLUGINS CSS STYLE -->
+    <link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
 
-        .button-group button {
-            background-color: #007bff;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 0 10px;
-            transition: background-color 0.3s ease;
-        }
+    <link href="plugins/prism/prism.css" rel="stylesheet" />
 
-        .button-group button:hover {
-            background-color: #0056b3;
-        }
+    <!-- MONO CSS -->
+    <link id="main-css-href" rel="stylesheet" href="css/style.css" />
 
-        .button-group button.subtle {
-            background-color: #7f8c8d;
-        }
+    <!-- FAVICON -->
+    <link href="/images/favicon.svg" rel="shortcut icon" />
 
-        .button-group button.subtle:hover {
-            background-color: #5d6d6e;
-        }
+    <script src="/plugins/nprogress/nprogress.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<style>
+body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #f2f2f2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+}
 
-        .status {
-            margin-top: 10px;
-            font-size: 18px;
-        }
+.card {
+	background-color: #fff;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	padding: 30px;
+	border-radius: 10px;
+	text-align: center;
+	width: 400px;
+}
 
-        .success {
-            color: green;
-        }
+.clock {
+	font-size: 4rem;
+	font-weight: bold;
+	color: #333;
+}
 
-        .success::before {
-            content: "✓ ";
-        }
+.button-group {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 10px;
+}
 
-        .error {
-            color: red;
-        }
+.button-group button {
+/* 	background-color: #9e6de0; */
+/* 	color: white; */
+	padding: 12px 24px;
+/* 	border: none; */
+/* 	border-radius: 20px; */
+	cursor: pointer;
+	font-size: 16px;
+	margin: 0 10px;
+/* 	transition: background-color 0.3s ease; */
+}
 
-        .error::before {
-            content: "✗ ";
-        }
+/* .button-group button:hover { */
+/* 	background-color: #742ed3; */
+/* } */
 
-        .subtle {
-            color: #7f8c8d;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+/* .button-group button.subtle { */
+/* 	background-color: #7f8c8d; */
+/* } */
+
+/* .button-group button.subtle:hover { */
+/* 	background-color: #5d6d6e; */
+/* } */
+
+.status {
+	margin-top: 10px;
+	font-size: 18px;
+}
+
+.success {
+	color: green;
+}
+
+.success::before {
+	content: "✓ ";
+}
+
+.error {
+	color: red;
+}
+
+.error::before {
+	content: "✗ ";
+}
+
+.subtle {
+	color: #7f8c8d;
+}
+</style>
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+	rel="stylesheet">
+
 </head>
-<body>
-    <div class="card">
-        <h1>打卡系統</h1>
 
-        <!-- 時鐘顯示 -->
-        <div class="clock">
-            <span id="clock-time" th:text="${currentTime}">--:--:--</span>
-        </div>
 
-        <!-- 上班/下班 打卡按鈕 -->
-        <div class="button-group">
-            <form th:action="@{/clock}" method="post">
-                <input type="hidden" name="clockTypeId" value="1">
-                <button type="submit">上班打卡</button>
-            </form>
-            <form th:action="@{/clock}" method="post">
-                <input type="hidden" name="clockTypeId" value="2">
-                <button type="submit">下班打卡</button>
-            </form>
-        </div>
+<body class="navbar-fixed sidebar-fixed" id="body">
+	<div th:replace="~{headerAndLeftside.html(pageHtml='clock')}">
+	   <div th:with="pageTitle='clock'"></div> <!-- 定義 pageTitle -->
+		<th:block th:fragment="contentTitle">
+			<!-- 輸入頁面標題 -->打卡功能
+</th:block>
+		<th:block th:fragment="content">
+			<!-- 輸入頁面內容 -->
+			<div class="content-wrapper">
+				<div class="card">
 
-        <!-- 外出/外出結束 打卡按鈕 -->
-        <div class="button-group">
-            <form th:action="@{/clock}" method="post">
-                <input type="hidden" name="clockTypeId" value="5">
-                <button type="submit" class="subtle">外出打卡</button>
-            </form>
-            <form th:action="@{/clock}" method="post">
-                <input type="hidden" name="clockTypeId" value="6">
-                <button type="submit" class="subtle">外出結束</button>
-            </form>
-        </div>
+					<!-- 時鐘顯示 -->
+					<div class="clock">
+							<canvas id="clock-canvas"></canvas>
+					</div>
 
-        <!-- 顯示打卡成功訊息 -->
-        <div th:if="${message}" class="success-message">
-            <p th:text="${message}"></p>
-        </div>
-    </div>
+					<!-- 上班/下班 打卡按鈕 -->
+					<div class="button-group">
+						<form th:action="@{/clock}" method="post">
+							<input type="hidden" name="clockTypeId" value="1">
+							<button type="submit" class="mb-1 btn btn-pill btn-primary">上班打卡</button>
+						</form>
+						<form th:action="@{/clock}" method="post">
+							<input type="hidden" name="clockTypeId" value="2">
+							<button type="submit" class="mb-1 btn btn-pill btn-primary">下班打卡</button>
+						</form>
+					</div>
 
-    <!-- 時鐘更新 Script -->
-    <script>
-        function updateClock() {
-            const clockTime = document.getElementById('clock-time');
-            const currentTime = new Date().toLocaleTimeString();
-            clockTime.textContent = currentTime;
-        }
+					<!-- 外出/外出結束 打卡按鈕 -->
+					<div class="button-group">
+						<form th:action="@{/clock}" method="post">
+							<input type="hidden" name="clockTypeId" value="5">
+							<button type="submit" class="mb-1 btn btn-outline-primary btn-pill">外出打卡</button>
+						</form>
+						<form th:action="@{/clock}" method="post">
+							<input type="hidden" name="clockTypeId" value="6">
+							<button type="submit" class="mb-1 btn btn-outline-primary btn-pill">外出結束</button>
+						</form>
+					</div>
+					<div th:if="${errorMessage}">
+    					<div class="alert alert-danger" th:text="${errorMessage}"></div>
+					</div>
+					<!-- 顯示打卡成功訊息 -->
+					<div th:if="${message}">
+    				<div class="alert alert-success" th:text="${message}"></div>
+					</div>
+					<br>
+					<div>
+					<a th:href="@{/attendancelogs}"><button type="button" class="mb-1 btn btn-pill btn-success">出勤記錄查詢</button></a>
+					 </div>
+				</div>
 
-        setInterval(updateClock, 1000);
-    </script>
+			</div>
+
+		</th:block>
+
+
+	</div>
+
+
+
+
+
+<script>
+  const canvas = document.getElementById('clock-canvas');
+  const ctx = canvas.getContext('2d');
+
+  // 自動調整 Canvas 大小
+  function resizeCanvas() {
+    const parentWidth = canvas.parentElement.clientWidth;
+    const parentHeight = canvas.parentElement.clientHeight;
+
+    canvas.width = parentWidth * 0.9;  // 留些間距
+    canvas.height = parentHeight * 0.6;
+
+    // 動態調整字體大小 (依據 Canvas 寬度)
+    ctx.font = `${canvas.width / 5}px Roboto`;
+  }
+
+  // 更新時間
+  function updateCanvasClock() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const currentDate = new Date();
+    const timeString = currentDate.toLocaleTimeString([], { hour12: false });
+
+    ctx.fillText(timeString, canvas.width / 2, canvas.height / 2);
+  }
+
+  // 初始化
+  resizeCanvas();
+  setInterval(updateCanvasClock, 1000); // 每秒更新一次
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    updateCanvasClock();
+  });
+</script>
+
+
+
 </body>
+
+
 </html>

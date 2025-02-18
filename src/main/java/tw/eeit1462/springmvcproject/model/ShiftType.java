@@ -1,5 +1,7 @@
 package tw.eeit1462.springmvcproject.model;
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 @Entity
 @Table(name = "shift_type")
@@ -19,10 +21,10 @@ public class ShiftType {
     private String shiftCategory;
 
     @Column(name = "start_time", nullable = false)
-    private String startTime;
+    private LocalDateTime startTime;
 
     @Column(name = "end_time", nullable = false)
-    private String endTime;
+    private LocalDateTime endTime;
 
     @Column(name = "estimated_hours", nullable = false)
     private Integer estimatedHours;
@@ -62,19 +64,19 @@ public class ShiftType {
 		this.shiftCategory = shiftCategory;
 	}
 
-	public String getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
 
-	public String getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
+	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>會議室管理</title>
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
+    <link href="plugins/material/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="plugins/simplebar/simplebar.css" rel="stylesheet" />
+
+    <!-- PLUGINS CSS STYLE -->
+    <link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
+
+    <link href="plugins/prism/prism.css" rel="stylesheet" />
+
+    <!-- MONO CSS -->
+    <link id="main-css-href" rel="stylesheet" href="css/style.css" />
+
+    <!-- FAVICON -->
+    <link href="/images/favicon.svg" rel="shortcut icon" />
+
+    <script src="/plugins/nprogress/nprogress.js"></script>
+
+</head>
+
+
+<body class="navbar-fixed sidebar-fixed" id="body">
+<div th:replace="~{headerAndLeftside.html(pageHtml='meetingroom')}">
+<th:block th:fragment="contentTitle">
+<!-- 輸入頁面標題 -->會議室管理
+</th:block>
+<th:block th:fragment="content">
+<!-- 輸入頁面內容 -->
+頁面內容
+</th:block>
+
+
+</div>
+</body>
+
+</html>
