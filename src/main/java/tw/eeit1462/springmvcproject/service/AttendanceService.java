@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tw.eeit1462.springmvcproject.model.Attendance;
-import tw.eeit1462.springmvcproject.model.AttendanceViolations;
+import tw.eeit1462.springmvcproject.model.AttendanceViolation;
 import tw.eeit1462.springmvcproject.model.Employee;
 import tw.eeit1462.springmvcproject.repository.AttendanceRepository;
-import tw.eeit1462.springmvcproject.repository.AttendanceViolationsRepository;
+import tw.eeit1462.springmvcproject.repository.AttendanceViolationRepository;
 import tw.eeit1462.springmvcproject.repository.EmployeeRepository;
 
 @Service
@@ -24,7 +24,7 @@ public class AttendanceService {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private AttendanceViolationsRepository attendanceViolationsRepository;
+    private AttendanceViolationRepository attendanceViolationsRepository;
 
     public Attendance getAttendanceWithDetails(int employeeId, LocalDate date) {
         Employee employee = employeeRepository.findById(employeeId)
@@ -37,8 +37,8 @@ public class AttendanceService {
             .orElseThrow(() -> new RuntimeException("沒有找到出勤記錄"));
 
         // 獲取違規紀錄
-        List<AttendanceViolations> violations = attendanceViolationsRepository.findByAttendance(attendance);
-        attendance.setAttendanceViolation(violations);
+        List<AttendanceViolation> violations = attendanceViolationsRepository.findByAttendance(attendance);
+        attendance.setAttendanceViolations(violations);
 
         return attendance;
     }
@@ -62,6 +62,7 @@ public class AttendanceService {
 
         return attendanceRepository.findAllAttendancesByEmployeeAndCreatedAtBetween(employee, startOfYear, endOfYear);
     }
+
     // 新增的指定日期查詢方法
     public Attendance getAttendanceByDate(int employeeId, LocalDate date) {
         Employee employee = employeeRepository.findById(employeeId)
@@ -74,8 +75,8 @@ public class AttendanceService {
             .orElseThrow(() -> new RuntimeException("沒有找到該日期的出勤記錄"));
 
         // 獲取違規紀錄
-        List<AttendanceViolations> violations = attendanceViolationsRepository.findByAttendance(attendance);
-        attendance.setAttendanceViolation(violations);
+        List<AttendanceViolation> violations = attendanceViolationsRepository.findByAttendance(attendance);
+        attendance.setAttendanceViolations(violations);
 
         return attendance;
     }

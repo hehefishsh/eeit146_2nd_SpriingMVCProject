@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "attendance_violations")
-public class AttendanceViolations {
+public class AttendanceViolation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

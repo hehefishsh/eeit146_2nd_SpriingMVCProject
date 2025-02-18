@@ -35,65 +35,183 @@
 <!-- 輸入頁面標題 -->出勤記錄查詢
 </th:block>
 <th:block th:fragment="content">
+
 <!-- 輸入頁面內容 -->
-頁面內容
+<!--           <div class="card card-default"> -->
+<!--             <div class="card-header card-header-border-bottom d-flex justify-content-between align-items-center"> -->
+<!--               <h2>How to use</h2> -->
+
+<!--               <a href="https://codepen.io/iamabdus/pen/OJPZxMg" target="_blank" -->
+<!--                 class="btn btn-outline-primary btn-sm text-uppercase"> -->
+<!--                 <i class="mdi mdi-codepen mr-1"></i> Open with codepen -->
+<!--               </a> -->
+<!--             </div> -->
+
+<!--             <div class="card-body"> -->
+<!--               <div class="mb-5"> -->
+<!--                 <h5 class="text-dark mb-3">FullCalendar</h5> -->
+
+<!--                 <p>We are using the FullCalendar plugin for this calendar app. This is a great plugin for displaying -->
+<!--                   events with details in a tooltip. You can change an event's name or other associated data and add a -->
+<!--                   new event. It is up to you to add this functionality through FullCalendar's event hooks. Check <a -->
+<!--                     href="http://fullcalendar.io/" target="_blank">FullCalendar documentation</a> for more details.</p> -->
+<!--               </div> -->
+
+<!--               <ul class="nav nav-tabs" id="myTab" role="tablist"> -->
+<!--                 <li class="nav-item"> -->
+<!--                   <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" -->
+<!--                     aria-controls="home" aria-selected="true"><i class="mdi mdi-language-javascript mr-1"></i> -->
+<!--                     Javascript</a> -->
+<!--                 </li> -->
+
+<!--                 <li class="nav-item"> -->
+<!--                   <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" -->
+<!--                     aria-controls="profile" aria-selected="false"><i class="mdi mdi-language-html5 mr-1"></i> HTML</a> -->
+<!--                 </li> -->
+
+<!--                 <li class="nav-item"> -->
+<!--                   <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" -->
+<!--                     aria-controls="contact" aria-selected="false"><i class="mdi mdi-language-css3 mr-1"></i> CSS</a> -->
+<!--                 </li> -->
+<!--               </ul> -->
+<!--               <div class="tab-content" id="myTabContent1"> -->
+<!--                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"> -->
+
+<!--                   <pre class="mt-4 m-0 pre-code"> -->
+
+<!-- </pre> -->
+
+<!--                   <pre class="mt-4 m-0"> -->
+<!-- <code>&lt;script src="plugins/fullcalendar/core-4.3.1/main.min.js"&gt;&lt;/script&gt;</code> -->
+<!-- <code>&lt;script src="plugins/fullcalendar/daygrid-4.3.0/main.min.js"&gt;&lt;/script&gt;</code> -->
+<!-- <code>&lt;script src="js/calendar.js"&gt;&lt;/script&gt;</code> -->
+<!-- </pre> -->
+<!--                 </div> -->
+
+<!--                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"> -->
+<!--                   <pre class="mt-4 m-0"> -->
+<!-- &lt;div id="calendar"&gt;&lt;/div&gt; -->
+<!-- </pre> -->
+<!--                 </div> -->
+
+<!--                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"> -->
+<!--                   <pre class="mt-4 m-0"> -->
+<!-- <code>&lt;link href="plugins/fullcalendar/core-4.3.1/main.min.css" rel="stylesheet"&gt;</code> -->
+<!-- <code>&lt;link href="plugins/fullcalendar/daygrid-4.3.0/main.min.css" rel="stylesheet"&gt;</code> -->
+<!-- </pre> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
+<!--           </div> -->
+
 <!-- 顯示考勤基本資料 -->
-    <h2>員工考勤紀錄</h2>
+<!--     <h3>考勤基本資料</h3> -->
+<!--     <table border="1"> -->
+<!--         <tr> -->
+<!--             <th>總工時</th> -->
+<!--             <th>正常工時</th> -->
+<!--             <th>加班工時</th> -->
+<!--             <th>外勤工時</th> -->
+<!--             <th>是否違規</th> -->
+<!--         </tr> -->
+<!--         <tr> -->
+<!--             <td th:text="${attendance.totalHours}"></td> -->
+<!--             <td th:text="${attendance.regularHours}"></td> -->
+<!--             <td th:text="${attendance.overtimeHours}"></td> -->
+<!--             <td th:text="${attendance.fieldWorkHours}"></td> -->
+<!--             <td th:text="${attendance.hasViolation} ? '是' : '否'"></td> -->
+<!--         </tr> -->
+<!--     </table> -->
 
-    <!-- 當天考勤基本資料 -->
-    <h3>今日考勤基本資料</h3>
-    <table border="1">
-        <tr>
-            <th>總工時</th>
-            <th>正常工時</th>
-            <th>加班工時</th>
-            <th>外勤工時</th>
-            <th>是否違規</th>
-        </tr>
-        <tr>
-            <td th:text="${todayAttendance.totalHours}"></td>
-            <td th:text="${todayAttendance.regularHours}"></td>
-            <td th:text="${todayAttendance.overtimeHours}"></td>
-            <td th:text="${todayAttendance.fieldWorkHours}"></td>
-            <td th:text="${todayAttendance.hasViolation} ? '是' : '否'"></td>
-        </tr>
-    </table>
     <!-- 顯示打卡紀錄 -->
-    <h3>打卡紀錄</h3>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>打卡時間</th>
-                <th>打卡類型</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="log : ${attendance.attendanceLogs}">
-                <td th:text="${log.clockTime}"></td>
-                <td th:text="${log.clockType.typeName}"></td>
-            </tr>
-        </tbody>
-    </table>
+<!--     <h3>打卡紀錄</h3> -->
+<!--     <table border="1"> -->
+<!--         <thead> -->
+<!--             <tr> -->
+<!--                 <th>打卡時間</th> -->
+<!--                 <th>打卡類型</th> -->
+<!--             </tr> -->
+<!--         </thead> -->
+<!--         <tbody> -->
+<!--             <tr th:each="log : ${attendance.attendanceLogs}"> -->
+<!--                 <td th:text="${log.clockTime}"></td> -->
+<!--                 <td th:text="${log.clockType.typeName}"></td> -->
+<!--             </tr> -->
+<!--         </tbody> -->
+<!--     </table> -->
 
-    <!-- 顯示違規紀錄 -->
-    <h3>違規紀錄</h3>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>違規類型</th>
-                <th>違規分鐘數</th>
-                <th>違規時間</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="violation : ${attendance.attendanceViolations}">
-                <td th:text="${violation.violationType.typeName}"></td>
-                <td th:text="${violation.violationMinutes}"></td>
-                <td th:text="${violation.createdAt}"></td>
-            </tr>
-        </tbody>
-    </table>
+<!--     顯示違規紀錄 -->
+<!--     <h3>違規紀錄</h3> -->
+<!--     <table border="1"> -->
+<!--         <thead> -->
+<!--             <tr> -->
+<!--                 <th>違規類型</th> -->
+<!--                 <th>違規分鐘數</th> -->
+<!--                 <th>違規時間</th> -->
+<!--             </tr> -->
+<!--         </thead> -->
+<!--         <tbody> -->
+<!--             <tr th:each="violation : ${attendance.attendanceViolations}"> -->
+<!--                 <td th:text="${violation.violationType.typeName}"></td> -->
+<!--                 <td th:text="${violation.violationMinutes}"></td> -->
+<!--                 <td th:text="${violation.createdAt}"></td> -->
+<!--             </tr> -->
+<!--         </tbody> -->
+<!--     </table> -->
 
+<!--     當天考勤基本資料 -->
+<!--     <h3>當天考勤基本資料</h3> -->
+<!--     <table border="1"> -->
+<!--         <tr> -->
+<!--             <th>總工時</th> -->
+<!--             <th>正常工時</th> -->
+<!--             <th>加班工時</th> -->
+<!--             <th>外勤工時</th> -->
+<!--             <th>是否違規</th> -->
+<!--         </tr> -->
+<!--         <tr> -->
+<!--             <td th:text="${todayAttendance.totalHours}"></td> -->
+<!--             <td th:text="${todayAttendance.regularHours}"></td> -->
+<!--             <td th:text="${todayAttendance.overtimeHours}"></td> -->
+<!--             <td th:text="${todayAttendance.fieldWorkHours}"></td> -->
+<!--             <td th:text="${todayAttendance.hasViolation} ? '是' : '否'"></td> -->
+<!--         </tr> -->
+<!--     </table> -->
+<!-- 	 <!-- 顯示打卡紀錄 --> -->
+<!--         <h3>打卡紀錄</h3> -->
+<!--         <table border="1"> -->
+<!--             <thead> -->
+<!--                 <tr> -->
+<!--                     <th>打卡時間</th> -->
+<!--                     <th>打卡類型</th> -->
+<!--                 </tr> -->
+<!--             </thead> -->
+<!--             <tbody> -->
+<!--                 <tr th:each="log : ${attendance.attendanceLogs}"> -->
+<!--                     <td th:text="${log.clockTime}"></td> -->
+<!--                     <td th:text="${log.clockType.typeName}"></td> -->
+<!--                 </tr> -->
+<!--             </tbody> -->
+<!--         </table> -->
+
+<!--         顯示違規紀錄 -->
+<!--         <h3>違規紀錄</h3> -->
+<!--         <table border="1"> -->
+<!--             <thead> -->
+<!--                 <tr> -->
+<!--                     <th>違規類型</th> -->
+<!--                     <th>違規分鐘數</th> -->
+<!--                     <th>違規時間</th> -->
+<!--                 </tr> -->
+<!--             </thead> -->
+<!--             <tbody> -->
+<!--                 <tr th:each="violation : ${attendance.attendanceViolations}"> -->
+<!--                     <td th:text="${violation.violationType.typeName}"></td> -->
+<!--                     <td th:text="${violation.violationMinutes}"></td> -->
+<!--                     <td th:text="${violation.createdAt}"></td> -->
+<!--                 </tr> -->
+<!--             </tbody> -->
+<!--         </table> -->
 <!--     當月考勤紀錄 -->
 <!--     <h3>當月考勤紀錄</h3> -->
 <!--     <table border="1"> -->
@@ -128,7 +246,7 @@
 <!--         </tbody> -->
 <!--     </table> -->
 
-    <!-- 指定日期查詢 -->
+<!--     指定日期查詢 -->
     <h3>查詢指定日期考勤紀錄</h3>
     <form action="#" th:action="@{/attendancelogs}" method="get">
         <label for="date">請輸入日期 (YYYY-MM-DD):</label>
@@ -136,7 +254,7 @@
         <button type="submit">查詢</button>
     </form>
 
-    <!-- 顯示指定日期的考勤基本資料 -->
+<!--     顯示指定日期的考勤基本資料 -->
     <div th:if="${attendance}">
         <h3>指定日期考勤基本資料</h3>
         <table border="1">
@@ -156,7 +274,7 @@
             </tr>
         </table>
 
-        <!-- 顯示打卡紀錄 -->
+        顯示打卡紀錄
         <h3>打卡紀錄</h3>
         <table border="1">
             <thead>
@@ -173,7 +291,7 @@
             </tbody>
         </table>
 
-        <!-- 顯示違規紀錄 -->
+        顯示違規紀錄
         <h3>違規紀錄</h3>
         <table border="1">
             <thead>
@@ -192,6 +310,7 @@
             </tbody>
         </table>
     </div>
+    
 </th:block>
 
 

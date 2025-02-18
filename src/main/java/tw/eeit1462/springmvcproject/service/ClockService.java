@@ -1,7 +1,6 @@
 package tw.eeit1462.springmvcproject.service;
 
 import java.time.Duration;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,14 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tw.eeit1462.springmvcproject.model.Attendance;
 import tw.eeit1462.springmvcproject.model.AttendanceLogs;
-import tw.eeit1462.springmvcproject.model.AttendanceViolations;
+import tw.eeit1462.springmvcproject.model.AttendanceViolation;
 import tw.eeit1462.springmvcproject.model.Employee;
 import tw.eeit1462.springmvcproject.model.ShiftType;
 import tw.eeit1462.springmvcproject.model.Status;
 import tw.eeit1462.springmvcproject.model.Type;
 import tw.eeit1462.springmvcproject.repository.AttendanceLogsRepository;
 import tw.eeit1462.springmvcproject.repository.AttendanceRepository;
-import tw.eeit1462.springmvcproject.repository.AttendanceViolationsRepository;
+import tw.eeit1462.springmvcproject.repository.AttendanceViolationRepository;
 import tw.eeit1462.springmvcproject.repository.EmployeeRepository;
 import tw.eeit1462.springmvcproject.repository.ScheduleRepository;
 import tw.eeit1462.springmvcproject.repository.StatusRepository;
@@ -46,7 +45,7 @@ public class ClockService {
     private ScheduleRepository scheduleRepository;
 
     @Autowired
-    private AttendanceViolationsRepository attendanceViolationsRepository;
+    private AttendanceViolationRepository attendanceViolationRepository;
 
     public List<AttendanceLogs> getLogsByEmployeeId(int employeeId) {
         return attendanceLogsRepository.findByEmployee_EmployeeId(employeeId);
@@ -114,14 +113,14 @@ public class ClockService {
             Type violationType = typeRepository.findByTypeName(exceptionMessage)
                 .orElseThrow(() -> new RuntimeException("異常類型不存在"));
 
-            AttendanceViolations violation = new AttendanceViolations();
+            AttendanceViolation violation = new AttendanceViolation();
             violation.setEmployee(employee);
             violation.setAttendance(attendance);
             violation.setViolationType(violationType);
             violation.setViolationMinutes((int) violationMinutes);
             violation.setCreatedAt(now);
 
-            attendanceViolationsRepository.save(violation);
+            attendanceViolationRepository.save(violation);
         }
 
         // 建立 AttendanceLogs 實體，記錄打卡事件

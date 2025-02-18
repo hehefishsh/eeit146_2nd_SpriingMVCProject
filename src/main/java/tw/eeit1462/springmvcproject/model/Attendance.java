@@ -22,9 +22,9 @@ public class Attendance {
     @OneToMany(mappedBy = "attendance", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AttendanceLogs> attendanceLogs;
 
-    // 新增 OneToMany 關聯到 AttendanceViolations
+    // 新增 OneToMany 關聯到 AttendanceViolation
     @OneToMany(mappedBy = "attendance", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<AttendanceViolations> attendanceViolations;
+    private List<AttendanceViolation> attendanceViolations;
 
     private float totalHours;
     private float regularHours;
@@ -126,11 +126,11 @@ public class Attendance {
 		this.attendanceLogs = attendanceLogs;
 	}
 
-	public List<AttendanceViolations> getAttendanceViolations() {
+	public List<AttendanceViolation> getAttendanceViolations() {
 		return attendanceViolations;
 	}
 
-	public void setAttendanceViolation(List<AttendanceViolations> attendanceViolations) {
+	public void setAttendanceViolations(List<AttendanceViolation> attendanceViolations) {
 		this.attendanceViolations = attendanceViolations;
 	}
 	
