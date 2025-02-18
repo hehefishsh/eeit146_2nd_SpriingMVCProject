@@ -1,6 +1,7 @@
 package tw.eeit1462.springmvcproject.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "attendance")
@@ -16,6 +17,14 @@ public class Attendance {
     @ManyToOne
     @JoinColumn(name = "shift_type_id", nullable = false)
     private ShiftType shiftType;
+    
+    // 新增 OneToMany 關聯到 AttendanceLogs
+    @OneToMany(mappedBy = "attendance", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AttendanceLogs> attendanceLogs;
+
+    // 新增 OneToMany 關聯到 AttendanceViolation
+    @OneToMany(mappedBy = "attendance", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AttendanceViolation> attendanceViolations;
 
     private float totalHours;
     private float regularHours;
@@ -108,4 +117,21 @@ public class Attendance {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	public List<AttendanceLogs> getAttendanceLogs() {
+		return attendanceLogs;
+	}
+
+	public void setAttendanceLogs(List<AttendanceLogs> attendanceLogs) {
+		this.attendanceLogs = attendanceLogs;
+	}
+
+	public List<AttendanceViolation> getAttendanceViolations() {
+		return attendanceViolations;
+	}
+
+	public void setAttendanceViolations(List<AttendanceViolation> attendanceViolations) {
+		this.attendanceViolations = attendanceViolations;
+	}
+	
 }

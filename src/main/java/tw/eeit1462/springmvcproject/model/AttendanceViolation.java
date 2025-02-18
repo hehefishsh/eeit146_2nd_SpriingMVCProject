@@ -67,4 +67,5 @@ public class AttendanceViolation {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+	
 }
