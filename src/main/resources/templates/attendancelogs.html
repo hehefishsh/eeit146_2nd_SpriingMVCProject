@@ -38,7 +38,10 @@
 <!-- 輸入頁面內容 -->
 頁面內容
 <!-- 顯示考勤基本資料 -->
-    <h3>考勤基本資料</h3>
+    <h2>員工考勤紀錄</h2>
+
+    <!-- 當天考勤基本資料 -->
+    <h3>今日考勤基本資料</h3>
     <table border="1">
         <tr>
             <th>總工時</th>
@@ -48,14 +51,13 @@
             <th>是否違規</th>
         </tr>
         <tr>
-            <td th:text="${attendance.totalHours}"></td>
-            <td th:text="${attendance.regularHours}"></td>
-            <td th:text="${attendance.overtimeHours}"></td>
-            <td th:text="${attendance.fieldWorkHours}"></td>
-            <td th:text="${attendance.hasViolation} ? '是' : '否'"></td>
+            <td th:text="${todayAttendance.totalHours}"></td>
+            <td th:text="${todayAttendance.regularHours}"></td>
+            <td th:text="${todayAttendance.overtimeHours}"></td>
+            <td th:text="${todayAttendance.fieldWorkHours}"></td>
+            <td th:text="${todayAttendance.hasViolation} ? '是' : '否'"></td>
         </tr>
     </table>
-
     <!-- 顯示打卡紀錄 -->
     <h3>打卡紀錄</h3>
     <table border="1">
@@ -91,6 +93,105 @@
             </tr>
         </tbody>
     </table>
+
+<!--     當月考勤紀錄 -->
+<!--     <h3>當月考勤紀錄</h3> -->
+<!--     <table border="1"> -->
+<!--         <thead> -->
+<!--             <tr> -->
+<!--                 <th>日期</th> -->
+<!--                 <th>總工時</th> -->
+<!--             </tr> -->
+<!--         </thead> -->
+<!--         <tbody> -->
+<!--             <tr th:each="attendance : ${monthlyAttendances}"> -->
+<!--                 <td th:text="${attendance.date}"></td> -->
+<!--                 <td th:text="${attendance.totalHours}"></td> -->
+<!--             </tr> -->
+<!--         </tbody> -->
+<!--     </table> -->
+
+<!--     當年度考勤紀錄 -->
+<!--     <h3>當年度考勤紀錄</h3> -->
+<!--     <table border="1"> -->
+<!--         <thead> -->
+<!--             <tr> -->
+<!--                 <th>月份</th> -->
+<!--                 <th>總工時</th> -->
+<!--             </tr> -->
+<!--         </thead> -->
+<!--         <tbody> -->
+<!--             <tr th:each="attendance : ${yearlyAttendances}"> -->
+<!--                 <td th:text="${attendance.month}"></td> -->
+<!--                 <td th:text="${attendance.totalHours}"></td> -->
+<!--             </tr> -->
+<!--         </tbody> -->
+<!--     </table> -->
+
+    <!-- 指定日期查詢 -->
+    <h3>查詢指定日期考勤紀錄</h3>
+    <form action="#" th:action="@{/attendancelogs}" method="get">
+        <label for="date">請輸入日期 (YYYY-MM-DD):</label>
+        <input type="date" id="date" name="date" th:value="${queryDate}"/>
+        <button type="submit">查詢</button>
+    </form>
+
+    <!-- 顯示指定日期的考勤基本資料 -->
+    <div th:if="${attendance}">
+        <h3>指定日期考勤基本資料</h3>
+        <table border="1">
+            <tr>
+                <th>總工時</th>
+                <th>正常工時</th>
+                <th>加班工時</th>
+                <th>外勤工時</th>
+                <th>是否違規</th>
+            </tr>
+            <tr>
+                <td th:text="${attendance.totalHours}"></td>
+                <td th:text="${attendance.regularHours}"></td>
+                <td th:text="${attendance.overtimeHours}"></td>
+                <td th:text="${attendance.fieldWorkHours}"></td>
+                <td th:text="${attendance.hasViolation} ? '是' : '否'"></td>
+            </tr>
+        </table>
+
+        <!-- 顯示打卡紀錄 -->
+        <h3>打卡紀錄</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>打卡時間</th>
+                    <th>打卡類型</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="log : ${attendance.attendanceLogs}">
+                    <td th:text="${log.clockTime}"></td>
+                    <td th:text="${log.clockType.typeName}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 顯示違規紀錄 -->
+        <h3>違規紀錄</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>違規類型</th>
+                    <th>違規分鐘數</th>
+                    <th>違規時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="violation : ${attendance.attendanceViolations}">
+                    <td th:text="${violation.violationType.typeName}"></td>
+                    <td th:text="${violation.violationMinutes}"></td>
+                    <td th:text="${violation.createdAt}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </th:block>
 
 

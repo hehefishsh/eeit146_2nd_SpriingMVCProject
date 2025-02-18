@@ -20,5 +20,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Integer>
 	
 	@Query("SELECT a FROM Attendance a LEFT JOIN FETCH a.attendanceLogs LEFT JOIN FETCH a.attendanceViolations WHERE a.employee.id = :employeeId")
 	List<Attendance> findByEmployeeIdWithDetails(@Param("employeeId") int employeeId);
+	
+    List<Attendance> findAllAttendancesByEmployeeAndCreatedAtBetween(Employee employee, LocalDateTime start, LocalDateTime end);
 
 }
