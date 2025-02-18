@@ -9,27 +9,6 @@
 
 <title>新增員工</title>
 
-<!-- GOOGLE FONTS -->
-<link
-	href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto"
-	rel="stylesheet">
-<link th:href="@{/plugins/material/css/materialdesignicons.min.css}"
-	rel="stylesheet" />
-<link th:href="@{/plugins/simplebar/simplebar.css}" rel="stylesheet}" />
-
-<!-- PLUGINS CSS STYLE -->
-<link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
-
-<link href="plugins/prism/prism.css" rel="stylesheet" />
-
-<!-- MONO CSS -->
-<link id="main-css-href" rel="stylesheet" th:href="@{/css/style.css}" />
-
-<!-- FAVICON -->
-<link href="/images/favicon.svg" rel="shortcut icon" />
-
-<script src="/plugins/nprogress/nprogress.js"></script>
-
 </head>
 
 <body class="navbar-fixed sidebar-fixed" id="body">
@@ -40,7 +19,7 @@
 		</th:block>
 		<th:block th:fragment="content">
 			<!-- 輸入頁面內容 -->
-			<form th:action="@{/createemployee}" method="post">
+			<form th:action="@{/employeecreate}" method="post">
 				<div class="form-group">
 					<label for="exampleFormControlInput4">員工姓名</label> <input
 						type="text" class="form-control rounded-0"
@@ -87,6 +66,7 @@
 			</form>
 		</th:block>
 	</div>
+	
 </body>
 
 </html>

@@ -8,35 +8,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <title>員工管理</title>
-
 <!-- GOOGLE FONTS -->
-<link
+	<link
 	href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto"
 	rel="stylesheet">
-<link href="plugins/material/css/materialdesignicons.min.css"
+	<link th:href="@{/plugins/material/css/materialdesignicons.min.css}"
 	rel="stylesheet" />
-    <link href="plugins/simplebar/simplebar.css" rel="stylesheet" />
-
-    <!-- PLUGINS CSS STYLE -->
-    <link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
-
-    <link href="plugins/prism/prism.css" rel="stylesheet" />
-
-    <!-- MONO CSS -->
-<link id="main-css-href" rel="stylesheet" href="css/style.css" />
-
-    <!-- FAVICON -->
-    <link href="/images/favicon.svg" rel="shortcut icon" />
-
-<!--
-    HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
-  -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-    <script src="/plugins/nprogress/nprogress.js"></script>
+<!--     PLUGINS CSS STYLE -->
+    <link th:href="@{/plugins/nprogress/nprogress.css}" rel="stylesheet" />
+<!--     MONO CSS -->
+	<link id="main-css-href" rel="stylesheet" th:href="@{/css/style.css}" />
+<!--     FAVICON -->
+    <script th:src="@{/plugins/nprogress/nprogress.js}"></script>
 
 </head>
 
@@ -63,7 +46,7 @@
 			<div id="sidebar" class="sidebar sidebar-with-footer">
 				<!-- Aplication Brand -->
 				<div class="app-brand">
-					<a th:href="@{/employeemanagement}"> <img src="images/logo.png" alt="Mono">
+					<a th:href="@{/employeemanagement}"> <img th:src="@{/images/logo.png}" alt="Mono">
 						<span class="brand-name" style="margin-left:20px"> JavaEIP</span>
 					</a>
 				</div>
@@ -126,12 +109,13 @@
 							<!-- User Account -->
 							<li class="dropdown user-menu">
 								<button class="dropdown-toggle nav-link" data-toggle="dropdown">
-									<img src="images/user/user-xs-01.jpg"
+<!-- 									個人照片放置處 -->
+									<img th:src="@{/images/user/user-xs-01.jpg}"
 										class="user-image rounded-circle" alt="User Image" /> <span
 										class="d-none d-lg-inline-block" th:text="${employee.employeeName}"></span>
 								</button>
 								<ul class="dropdown-menu dropdown-menu-right">
-									<li><a class="dropdown-link-item" th:href="@{/employeedetail}">
+									<li><a class="dropdown-link-item" th:href="@{/employee/detail}">
 											<i class="mdi mdi-account-outline"></i> <span
 											class="nav-text">個人資料</span>
 									</a></li>
@@ -186,41 +170,11 @@
 
 	</div>
 
-	<script>
-		function updateClock() {
-			const clockTime = document.getElementById('clock-time');
-			const currentTime = new Date().toLocaleTimeString();
-			clockTime.textContent = currentTime;
-		}
+	<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+	<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
-		setInterval(updateClock, 1000);
-	</script>
-	<script src="plugins/jquery/jquery.min.js"></script>
-	<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="plugins/simplebar/simplebar.min.js"></script>
-	<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
-
-
-
-	<script src="plugins/prism/prism.js"></script>
-
-
-
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCn8TFXGg17HAUcNpkwtxxyT9Io9B_NcM"
-		defer></script>
-
-
-	<script src="js/mono.js"></script>
-	<script src="js/chart.js"></script>
-	<script src="js/map.js"></script>
-	<script src="js/custom.js"></script>
-
-
-
-
-	<!--  -->
-
+	<script th:src="@{/js/mono.js}"></script>
+	<script th:src="@{/js/chart.js}"></script>
 
 </body>
 
