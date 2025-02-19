@@ -56,12 +56,39 @@ public class AttendanceLogsController {
 			return "attendancelogs"; // Thymeleaf 頁面名稱
 		} catch (EmployeeNotFoundException e) {
 			model.addAttribute("error", e.getMessage());
-				return "attendancelogs";
-		}catch (AttendanceTodayNotFoundException ae) {
-			model.addAttribute("atError", ae.getMessage());
 			return "attendancelogs";
-		}catch (AttendanceNotFoundException ae) {
+		} catch (AttendanceTodayNotFoundException ate) {
+			model.addAttribute("atError", ate.getMessage());
+			// 如果提供了日期，查詢指定日期的考勤紀錄
+			try {
+				if (date != null && !date.isEmpty()) {
+
+					LocalDate queryDate = LocalDate.parse(date);
+					Attendance attendance = attendanceService.getAttendanceByDate(employeeId, queryDate);
+					model.addAttribute("attendance", attendance);
+					model.addAttribute("queryDate", queryDate); // 用於顯示查詢的日期
+				}
+				return "attendancelogs";
+			} catch (AttendanceNotFoundException ae) {
+				model.addAttribute("aError", ae.getMessage());
+				return "attendancelogs";
+			}
+		} catch (AttendanceNotFoundException ae) {
 			model.addAttribute("aError", ae.getMessage());
+			System.out.println(ae.getMessage());
+			// 查詢當天的 Attendance，包含 logs 和 violations
+			Attendance todayAttendance = attendanceService.getAttendanceWithDetails(employeeId, LocalDate.now());
+			model.addAttribute("todayAttendance", todayAttendance);
+
+			// 查詢當月的 Attendance
+			LocalDate startOfMonth = LocalDate.now().withDayOfMonth(1);
+			List<Attendance> monthlyAttendances = attendanceService.getAttendancesForMonth(employeeId, startOfMonth);
+			model.addAttribute("monthlyAttendances", monthlyAttendances);
+
+			// 查詢當年的 Attendance
+			LocalDate startOfYear = LocalDate.now().withDayOfYear(1);
+			List<Attendance> yearlyAttendances = attendanceService.getAttendancesForYear(employeeId, startOfYear);
+			model.addAttribute("yearlyAttendances", yearlyAttendances);
 			return "attendancelogs";
 		}
 	}
