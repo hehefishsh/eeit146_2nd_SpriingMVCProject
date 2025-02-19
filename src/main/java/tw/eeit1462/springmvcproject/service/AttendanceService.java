@@ -6,6 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import tw.eeit1462.springmvcproject.exception.AttendanceNotFoundException;
+import tw.eeit1462.springmvcproject.exception.AttendanceTodayNotFoundException;
+import tw.eeit1462.springmvcproject.exception.EmployeeNotFoundException;
 import tw.eeit1462.springmvcproject.model.Attendance;
 import tw.eeit1462.springmvcproject.model.AttendanceViolations;
 import tw.eeit1462.springmvcproject.model.Employee;
@@ -34,7 +38,7 @@ public class AttendanceService {
         LocalDateTime endOfDay = startOfDay.plusDays(1);
 
         Attendance attendance = attendanceRepository.findByEmployeeAndCreatedAtBetween(employee, startOfDay, endOfDay)
-            .orElseThrow(() -> new RuntimeException("沒有找到出勤記錄"));
+            .orElseThrow(() -> new RuntimeException("沒有找到今日出勤記錄"));
 
         // 獲取違規紀錄
         List<AttendanceViolations> violations = attendanceViolationsRepository.findByAttendance(attendance);
@@ -71,7 +75,7 @@ public class AttendanceService {
         LocalDateTime endOfDay = startOfDay.plusDays(1);
 
         Attendance attendance = attendanceRepository.findByEmployeeAndCreatedAtBetween(employee, startOfDay, endOfDay)
-            .orElseThrow(() -> new RuntimeException("沒有找到該日期的出勤記錄"));
+            .orElseThrow(() -> new AttendanceNotFoundException("沒有找到該日期的出勤記錄"));
 
         // 獲取違規紀錄
         List<AttendanceViolations> violations = attendanceViolationsRepository.findByAttendance(attendance);
