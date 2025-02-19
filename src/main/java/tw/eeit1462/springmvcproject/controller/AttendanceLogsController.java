@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import tw.eeit1462.springmvcproject.exception.AttendanceNotFoundException;
+import tw.eeit1462.springmvcproject.exception.AttendanceTodayNotFoundException;
+import tw.eeit1462.springmvcproject.exception.EmployeeNotFoundException;
 import tw.eeit1462.springmvcproject.model.Attendance;
 import tw.eeit1462.springmvcproject.model.Employee;
 import tw.eeit1462.springmvcproject.service.AttendanceService;
@@ -52,21 +54,15 @@ public class AttendanceLogsController {
 			}
 
 			return "attendancelogs"; // Thymeleaf 頁面名稱
-		} catch (RuntimeException e) {
+		} catch (EmployeeNotFoundException e) {
 			model.addAttribute("error", e.getMessage());
-			// 如果提供了日期，查詢指定日期的考勤紀錄
-			try {
-				if (date != null && !date.isEmpty()) {
-					LocalDate queryDate = LocalDate.parse(date);
-					Attendance attendance = attendanceService.getAttendanceByDate(employeeId, queryDate);
-					model.addAttribute("attendance", attendance);
-					model.addAttribute("queryDate", queryDate); // 用於顯示查詢的日期
-				}
 				return "attendancelogs";
-			} catch (AttendanceNotFoundException ae) {
-				model.addAttribute("aError", ae.getMessage());
-				return "attendancelogs";
-			}
+		}catch (AttendanceTodayNotFoundException ae) {
+			model.addAttribute("atError", ae.getMessage());
+			return "attendancelogs";
+		}catch (AttendanceNotFoundException ae) {
+			model.addAttribute("aError", ae.getMessage());
+			return "attendancelogs";
 		}
 	}
 }

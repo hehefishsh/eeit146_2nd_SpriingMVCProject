@@ -44,64 +44,67 @@
 			<div th:if="${error}" style="color: red;">
 				<p th:text="${error}"></p>
 			</div>
+			<div th:if="${atError}" style="color: red;">
+				<p th:text="${atError}"></p>
+			</div>
 			<!-- 顯示考勤基本資料 -->
 <!--     <h2>員工考勤紀錄</h2> -->
 
 			<!--     當天考勤基本資料 -->
-<!-- 			<div th:if="${todayAttendance}"> -->
-<!-- 			    <h3>今日考勤基本資料</h3> -->
-<!-- 			    <table border="1"> -->
-<!-- 			        <tr> -->
-<!-- 			            <th>總工時</th> -->
-<!-- 			            <th>正常工時</th> -->
-<!-- 			            <th>加班工時</th> -->
-<!-- 			            <th>外勤工時</th> -->
-<!-- 			            <th>是否違規</th> -->
-<!-- 			        </tr> -->
-<!-- 			        <tr> -->
-<!-- 			            <td th:text="${todayAttendance.totalHours}"></td> -->
-<!-- 			            <td th:text="${todayAttendance.regularHours}"></td> -->
-<!-- 			            <td th:text="${todayAttendance.overtimeHours}"></td> -->
-<!-- 			            <td th:text="${todayAttendance.fieldWorkHours}"></td> -->
-<!-- 			            <td th:text="${todayAttendance.hasViolation} ? '是' : '否'"></td> -->
-<!-- 			        </tr> -->
-<!-- 			    </table> -->
-<!-- 			    顯示打卡紀錄 -->
-<!-- 			    <h3>打卡紀錄</h3> -->
-<!-- 			    <table border="1"> -->
-<!-- 			        <thead> -->
-<!-- 			            <tr> -->
-<!-- 			                <th>打卡時間</th> -->
-<!-- 			                <th>打卡類型</th> -->
-<!-- 			            </tr> -->
-<!-- 			        </thead> -->
-<!-- 			        <tbody> -->
-<!-- 			            <tr th:each="log : ${todayAttendance.attendanceLogs}"> -->
-<!-- 			                <td th:text="${log.clockTime}"></td> -->
-<!-- 			                <td th:text="${log.clockType.typeName}"></td> -->
-<!-- 			            </tr> -->
-<!-- 			        </tbody> -->
-<!-- 			    </table> -->
+			<div th:if="${todayAttendance}">
+			    <h3>今日考勤基本資料</h3>
+			    <table border="1">
+			        <tr>
+			            <th>總工時</th>
+			            <th>正常工時</th>
+			            <th>加班工時</th>
+			            <th>外勤工時</th>
+			            <th>是否違規</th>
+			        </tr>
+			        <tr>
+			            <td th:text="${todayAttendance.totalHours}"></td>
+			            <td th:text="${todayAttendance.regularHours}"></td>
+			            <td th:text="${todayAttendance.overtimeHours}"></td>
+			            <td th:text="${todayAttendance.fieldWorkHours}"></td>
+			            <td th:text="${todayAttendance.hasViolation} ? '是' : '否'"></td>
+			        </tr>
+			    </table>
+			    顯示打卡紀錄
+			    <h3>打卡紀錄</h3>
+			    <table border="1">
+			        <thead>
+			            <tr>
+			                <th>打卡時間</th>
+			                <th>打卡類型</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <tr th:each="log : ${todayAttendance.attendanceLogs}">
+			                <td th:text="${log.clockTime}"></td>
+			                <td th:text="${log.clockType.typeName}"></td>
+			            </tr>
+			        </tbody>
+			    </table>
 
-<!-- <!-- 			    顯示違規紀錄 --> -->
-<!-- 			    <h3>違規紀錄</h3> -->
-<!-- 			    <table border="1"> -->
-<!-- 			        <thead> -->
-<!-- 			            <tr> -->
-<!-- 			                <th>違規類型</th> -->
-<!-- 			                <th>違規分鐘數</th> -->
-<!-- 			                <th>違規時間</th> -->
-<!-- 			            </tr> -->
-<!-- 			        </thead> -->
-<!-- 			        <tbody> -->
-<!-- 			            <tr th:each="violation : ${todayAttendance.attendanceViolations}"> -->
-<!-- 			                <td th:text="${violation.violationType.typeName}"></td> -->
-<!-- 			                <td th:text="${violation.violationMinutes}"></td> -->
-<!-- 			                <td th:text="${violation.createdAt}"></td> -->
-<!-- 			            </tr> -->
-<!-- 			        </tbody> -->
-<!-- 			    </table> -->
-<!-- 			    </div> -->
+<!-- 			    顯示違規紀錄 -->
+			    <h3>異常紀錄</h3>
+			    <table border="1">
+			        <thead>
+			            <tr>
+			                <th>異常類型</th>
+			                <th>異常分鐘數</th>
+			                <th>異常時間</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <tr th:each="violation : ${todayAttendance.attendanceViolations}">
+			                <td th:text="${violation.violationType.typeName}"></td>
+			                <td th:text="${violation.violationMinutes}"></td>
+			                <td th:text="${violation.createdAt}"></td>
+			            </tr>
+			        </tbody>
+			    </table>
+			    </div>
 
 			<!--     當月考勤紀錄 -->
 			<!--     <h3>當月考勤紀錄</h3> -->
@@ -182,14 +185,14 @@
 					</tbody>
 				</table>
 
-				<!-- 顯示違規紀錄 -->
-				<h3>違規紀錄</h3>
+				<!-- 顯示異常紀錄 -->
+				<h3>異常紀錄</h3>
 				<table border="1">
 					<thead>
 						<tr>
-							<th>違規類型</th>
-							<th>違規分鐘數</th>
-							<th>違規時間</th>
+							<th>異常類型</th>
+							<th>異常分鐘數</th>
+							<th>異常時間</th>
 						</tr>
 					</thead>
 					<tbody>

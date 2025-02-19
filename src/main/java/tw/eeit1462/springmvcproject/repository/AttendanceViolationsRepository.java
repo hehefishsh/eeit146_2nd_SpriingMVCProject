@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import tw.eeit1462.springmvcproject.model.Attendance;
 import tw.eeit1462.springmvcproject.model.AttendanceViolations;
 
-@Repository
 public interface AttendanceViolationsRepository extends JpaRepository<AttendanceViolations, Integer> {
 
 	List<AttendanceViolations> findByAttendance(Attendance attendance);
