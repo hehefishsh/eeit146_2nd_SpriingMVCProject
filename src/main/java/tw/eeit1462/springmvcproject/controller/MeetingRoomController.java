@@ -23,6 +23,6 @@ public class MeetingRoomController {
         model.addAttribute("meetings", meetings); 
         return "meetingroom"; 
     }
-}
+} 
 
 
