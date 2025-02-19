@@ -75,7 +75,6 @@ public class AttendanceLogsController {
 			}
 		} catch (AttendanceNotFoundException ae) {
 			model.addAttribute("aError", ae.getMessage());
-			System.out.println(ae.getMessage());
 			// 查詢當天的 Attendance，包含 logs 和 violations
 			Attendance todayAttendance = attendanceService.getAttendanceWithDetails(employeeId, LocalDate.now());
 			model.addAttribute("todayAttendance", todayAttendance);
