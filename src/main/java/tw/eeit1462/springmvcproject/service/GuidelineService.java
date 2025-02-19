@@ -1,6 +1,7 @@
 package tw.eeit1462.springmvcproject.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,15 @@ public class GuidelineService {
 		List<Guideline> guidelines = guidelineRepository.findAll();
 		
 		return guidelines;
+	}
+	
+	public Guideline findGuidelineById(Integer id) {
+		Optional<Guideline> guideline = guidelineRepository.findById(id);
+		
+		if(guideline!=null) {
+			return guideline.get();
+		}else {
+			return null;
+		}
 	}
 }
