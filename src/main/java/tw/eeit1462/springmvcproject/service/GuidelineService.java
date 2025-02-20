@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tw.eeit1462.springmvcproject.model.Guideline;
+import tw.eeit1462.springmvcproject.model.GuidelineContent;
+import tw.eeit1462.springmvcproject.repository.GuidelineContentRepository;
 import tw.eeit1462.springmvcproject.repository.GuidelineRepository;
 
 @Service
@@ -16,6 +18,8 @@ public class GuidelineService {
 
 	@Autowired
 	private GuidelineRepository guidelineRepository;
+	@Autowired
+	private GuidelineContentRepository contentRepository;
 
 	public List<Guideline> findAllGuideline(){
 		List<Guideline> guidelines = guidelineRepository.findAll();
@@ -31,5 +35,10 @@ public class GuidelineService {
 		}else {
 			return null;
 		}
+	}
+	
+	public List<GuidelineContent> findContentById(Integer id){
+		return contentRepository.findByGuidelineGuideId(id);
+		
 	}
 }

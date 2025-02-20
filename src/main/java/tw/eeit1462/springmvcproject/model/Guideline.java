@@ -1,10 +1,15 @@
 package tw.eeit1462.springmvcproject.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,39 +27,31 @@ public class Guideline {
 	@Column(name = "guide_content")
 	private String guideContent;
 	
-	@Column(name = "guide_hyperlink")
-	private String guideHyperlink;
-	
-	@Column(name = "guide_other")
-    private byte[] guideOther;
+	@OneToMany(mappedBy = "guideline",cascade = CascadeType.ALL)
+	private List<GuidelineContent> contents=new ArrayList<>();
 	
 	public Guideline() {
 	}
 
 	
 	public Guideline(String guideTitle, String guideContent) {
-		super();
 		this.guideTitle = guideTitle;
 		this.guideContent = guideContent;
 	}
 
 
-	public Guideline(String guideTitle, String guideContent, String guideHyperlink, byte[] guideOther) {
-		super();
-		this.guideTitle = guideTitle;
-		this.guideContent = guideContent;
-		this.guideHyperlink = guideHyperlink;
-		this.guideOther = guideOther;
-	}
-
-
-
-	public Guideline(int guideId, String guideTitle, String guideContent, String guideHyperlink, byte[] guideOther) {
+	public Guideline(int guideId, String guideTitle, String guideContent) {
 		this.guideId = guideId;
 		this.guideTitle = guideTitle;
 		this.guideContent = guideContent;
-		this.guideHyperlink = guideHyperlink;
-		this.guideOther = guideOther;
+	}
+
+
+	public Guideline(int guideId, String guideTitle, String guideContent, List<GuidelineContent> contents) {
+		this.guideId = guideId;
+		this.guideTitle = guideTitle;
+		this.guideContent = guideContent;
+		this.contents = contents;
 	}
 
 
@@ -87,24 +84,5 @@ public class Guideline {
 		this.guideContent = guideContent;
 	}
 
-
-	public String getGuideHyperlink() {
-		return guideHyperlink;
-	}
-
-
-	public void setGuideHyperlink(String guideHyperlink) {
-		this.guideHyperlink = guideHyperlink;
-	}
-
-
-	public byte[] getGuideOther() {
-		return guideOther;
-	}
-
-
-	public void setGuideOther(byte[] guideOther) {
-		this.guideOther = guideOther;
-	}
 
 }

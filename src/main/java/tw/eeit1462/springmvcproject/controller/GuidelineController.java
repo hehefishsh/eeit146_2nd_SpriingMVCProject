@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import tw.eeit1462.springmvcproject.model.Guideline;
+import tw.eeit1462.springmvcproject.model.GuidelineContent;
 import tw.eeit1462.springmvcproject.service.GuidelineService;
 
 @Controller
@@ -27,8 +28,11 @@ public class GuidelineController {
 	@GetMapping("/guideline/detail/{id}")
 	public String showEmployeeDetail(@PathVariable("id") Integer guideId,Model model) {
 		
+		List<GuidelineContent> contentsById = guidelineService.findContentById(guideId);
 		Guideline guideline = guidelineService.findGuidelineById(guideId);
+		model.addAttribute("contents",contentsById);
 		model.addAttribute("guideline",guideline);
+		
 		return "guidelineDetail";
 	}
 }
