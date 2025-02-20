@@ -1,54 +1,97 @@
 <!DOCTYPE html>
-
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>會議室管理</title>
+<title>會議室管理</title>
 
-    <!-- GOOGLE FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
-    <link href="plugins/material/css/materialdesignicons.min.css" rel="stylesheet" />
-    <link href="plugins/simplebar/simplebar.css" rel="stylesheet" />
+<!-- GOOGLE FONTS -->
+<link
+	href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto"
+	rel="stylesheet">
+<link href="/plugins/material/css/materialdesignicons.min.css"
+	rel="stylesheet" />
+<link href="/plugins/simplebar/simplebar.css" rel="stylesheet" />
+<link href="/plugins/nprogress/nprogress.css" rel="stylesheet" />
+<link href="/plugins/prism/prism.css" rel="stylesheet" />
+<link id="main-css-href" rel="stylesheet" href="/css/style.css" />
+<link href="/images/favicon.svg" rel="shortcut icon" />
 
-    <!-- PLUGINS CSS STYLE -->
-    <link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
+<script src="/plugins/nprogress/nprogress.js"></script>
 
-    <link href="plugins/prism/prism.css" rel="stylesheet" />
-
-    <!-- MONO CSS -->
-    <link id="main-css-href" rel="stylesheet" href="css/style.css" />
-
-    <!-- FAVICON -->
-    <link href="/images/favicon.png" rel="shortcut icon" />
-
-    <script src="/plugins/nprogress/nprogress.js"></script>
 
 </head>
 
-
 <body class="navbar-fixed sidebar-fixed" id="body">
-<div th:replace="~{headerAndLeftside.html}">
-<th:block th:fragment="contentTitle">
-<!-- 輸入頁面標題 -->會議室管理
-</th:block>
-<th:block th:fragment="content">
-<!-- 輸入頁面內容 -->
-頁面內容
-</th:block>
+	<div th:replace="~{headerAndLeftside.html(pageHtml='meetingroom')}">
+		<div th:with="pageTitle='meetingroom'"></div>
+
+		<th:block th:fragment="contentTitle">
+			<h2>會議室管理</h2>
+		</th:block>
+
+		<th:block th:fragment="content">
+			<div class="content-wrapper">
+				<div class="card">
+					<br><h3>會議室預約</h3><br>
+
+					<!-- 顯示錯誤訊息 -->
+					<div th:if="${errorMessage}">
+						<div class="alert alert-danger" th:text="${errorMessage}"></div>
+					</div>
+
+					<!-- 顯示成功訊息 -->
+					<div th:if="${message}">
+						<div class="alert alert-success" th:text="${message}"></div>
+					</div>
+
+					<!-- 會議室表格 -->
+					<div class="table-container">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>預約人</th>
+									<th>會議室</th>
+									<th>開始時間</th>
+									<th>結束時間</th>
+									<th>備註</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="meeting : ${meetings}">
+									<td th:text="${meeting.employee.employeeName}"></td>
+									<!-- 預約人 -->
+									<td th:text="${meeting.room.roomName}"></td>
+									<!-- 會議室名稱 -->
+									<td class="time-column"
+										th:text="${#temporals.format(meeting.startTime, 'yyyy-MM-dd HH:mm')}"></td>
+									<!-- 開始時間 -->
+									<td class="time-column"
+										th:text="${#temporals.format(meeting.endTime, 'yyyy-MM-dd HH:mm')}"></td>
+									<!-- 結束時間 -->
+									<td class="note-column" th:text="${meeting.notes}"></td>
+									<!-- 備註 -->
+									<td class="btn-group"> <a
+										class="btn btn-danger btn-sm"
+										th:href="@{/meetings/delete/{id}(id=${meeting.id})}">刪除</a></td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
 
 
-</div>
+					<!-- 新增會議室按鈕 -->
+					<a class="btn btn-success" href="/meetings/new" style="background-color: #A070E0; border-color: purple;">預約會議室</a>
+
+				</div>
+			</div>
+		</th:block>
+	</div>
 </body>
 
 </html>

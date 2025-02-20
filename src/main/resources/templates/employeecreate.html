@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>新增員工</title>
+
+</head>
+
+<body class="navbar-fixed sidebar-fixed" id="body">
+	<div
+		th:replace="~{headerAndLeftside.html(pageHtml='employeemanagement')}">
+		<th:block th:fragment="contentTitle">
+			<!-- 輸入頁面標題 -->新增員工
+		</th:block>
+		<th:block th:fragment="content">
+			<!-- 輸入頁面內容 -->
+			<form th:action="@{/employeecreate}" method="post">
+				<div class="form-group">
+					<label for="exampleFormControlInput4">員工姓名</label> <input
+						type="text" class="form-control rounded-0"
+						id="exampleFormControlInput4" placeholder="姓名" name="employeeName"
+						required>
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlPasswor3">密碼</label> <input
+						type="password" class="form-control rounded-0"
+						id="exampleFormControlPasswor3" placeholder="密碼" name="password"
+						required>
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlSelect14">部門</label> <select
+						class="form-control rounded-0" id="exampleFormControlSelect14"
+						name="departmentid">
+						<th:block th:each="department : ${departments}">
+							<option th:value="${department.departmentId}"
+								th:text="${department.departmentName}">部門名稱</option>
+						</th:block>
+
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlSelect15">職位</label> <select
+						class="form-control rounded-0" id="exampleFormControlSelect15"
+						name="positionid">
+						<th:block th:each="position : ${positions}">
+							<option th:value="${position.positionId}"
+								th:text="${position.positionName}">職位</option>
+						</th:block>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="exampleFormControlSelect16">入職時間</label> <input
+						type="date" id="exampleFormControlSelect16" name="startDate"
+						required />
+				</div>
+				<div class="form-footer">
+					<button type="submit" class="btn btn-secondary btn-pill">Submit</button>
+					<button type="submit" class="btn btn-light btn-pill">Cancel</button>
+				</div>
+
+			</form>
+		</th:block>
+	</div>
+	
+</body>
+
+</html>

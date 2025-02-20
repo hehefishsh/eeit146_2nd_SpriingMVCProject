@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>公佈欄</title>
+    <title>智庫</title>
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
@@ -38,17 +38,19 @@
 
 
 <body class="navbar-fixed sidebar-fixed" id="body">
-<div th:replace="~{headerAndLeftside.html(pageHtml='bulletin')}">
-<th:block th:fragment="contentTitle">
-<!-- 輸入頁面標題 -->公佈欄
-</th:block>
-<th:block th:fragment="content">
-<!-- 輸入頁面內容 -->
-頁面內容
-</th:block>
+    <div th:replace="~{headerAndLeftside.html(pageHtml='guideline')}">
+        <th:block th:fragment="contentTitle">
+            <!-- 輸入頁面標題 -->智庫
+        </th:block>
+        <th:block th:fragment="content">
+            <h2 th:text="${guideline.guideTitle}"></h2>
+            <p th:text="${guideline.guideContent}"></p>
+
+            <a th:href="@{/guideline}">回智庫首頁</a>
+        </th:block>
 
 
-</div>
+    </div>
 </body>
 
 </html>

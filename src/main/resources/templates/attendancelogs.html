@@ -1,12 +1,5 @@
 <!DOCTYPE html>
 
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -14,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>公佈欄</title>
+    <title>出勤記錄查詢</title>
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
@@ -36,11 +29,10 @@
 
 </head>
 
-
 <body class="navbar-fixed sidebar-fixed" id="body">
-<div th:replace="~{headerAndLeftside.html(pageHtml='bulletin')}">
+<div th:replace="~{headerAndLeftside.html(pageHtml='clock')}">
 <th:block th:fragment="contentTitle">
-<!-- 輸入頁面標題 -->公佈欄
+<!-- 輸入頁面標題 -->出勤記錄查詢
 </th:block>
 <th:block th:fragment="content">
 <!-- 輸入頁面內容 -->

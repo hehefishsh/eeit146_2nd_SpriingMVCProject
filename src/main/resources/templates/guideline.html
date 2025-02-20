@@ -29,7 +29,7 @@
     <link id="main-css-href" rel="stylesheet" href="css/style.css" />
 
     <!-- FAVICON -->
-    <link href="/images/favicon.png" rel="shortcut icon" />
+    <link href="/images/favicon.svg" rel="shortcut icon" />
 
     <script src="/plugins/nprogress/nprogress.js"></script>
 
@@ -37,13 +37,28 @@
 
 
 <body class="navbar-fixed sidebar-fixed" id="body">
-<div th:replace="~{headerAndLeftside.html}">
+<div th:replace="~{headerAndLeftside.html(pageHtml='guideline')}">
 <th:block th:fragment="contentTitle">
 <!-- 輸入頁面標題 -->智庫
 </th:block>
 <th:block th:fragment="content">
 <!-- 輸入頁面內容 -->
-頁面內容
+<table border="1">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>標題</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 使用 th:each 循環顯示每個項目 -->
+					<tr th:each="guideline : ${allGuideline}">
+						<td th:text="${guideline.guideId}"></td>
+						<td><a th:href="@{/guideline/detail/{id}(id=${guideline.guideId})}" th:text="${guideline.guideTitle}"></a></td>
+					</tr>
+				</tbody>
+			</table>
+			
 </th:block>
 
 

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>員工個人資料</title>
+
+<!-- GOOGLE FONTS -->
+
+
+</head>
+
+<body class="navbar-fixed sidebar-fixed" id="body">
+	<div th:replace="~{headerAndLeftside.html}">
+		<th:block th:fragment="contentTitle">
+			<!-- 輸入頁面標題 -->個人資料
+</th:block>
+		<th:block th:fragment="content">
+			<!-- 輸入頁面內容 -->
+			<div class="container">
+				<h3>個人資料</h3>
+				<div class="row">
+					<table>
+						<tr>
+							<th>員工ID</th>
+							<td th:text="${employee.employeeId}">ID</td>
+						</tr>
+						<tr>
+							<th>姓名</th>
+							<td th:text="${employee.employeeName}">姓名</td>
+						</tr>
+						<tr>
+							<th>職位</th>
+							<td th:text="${employee.position.positionName}">職位</td>
+						</tr>
+						<tr>
+							<th>部門</th>
+							<td th:text="${employee.department.departmentName}">部門</td>
+						</tr>
+						<tr>
+							<th>入職時間</th>
+							<td th:text="${employee.hireDate}">入職時間</td>
+						</tr>
+						<tr>
+							<th>狀態</th>
+							<td th:text="${employee.status.statusName}">狀態</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</th:block>
+	</div>
+</body>
+
+</html>
