@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -29,9 +28,8 @@ public class GuidelineContent {
 	@Column(name = "text_content")
 	private String textContent;
 	
-	@Lob
 	@Column(name = "image_content")
-	private byte[] imageContent;
+	private String imageContent;
 	
 	public GuidelineContent() {
 	}
@@ -48,7 +46,7 @@ public class GuidelineContent {
 
 
 	public GuidelineContent(Integer guidelineContentId, Guideline guideline, String contentType, String textContent,
-			byte[] imageContent) {
+			String imageContent) {
 		this.guidelineContentId = guidelineContentId;
 		this.guideline = guideline;
 		this.contentType = contentType;
@@ -106,13 +104,13 @@ public class GuidelineContent {
 
 
 
-	public byte[] getImageContent() {
+	public String getImageContent() {
 		return imageContent;
 	}
 
 
 
-	public void setImageContent(byte[] imageContent) {
+	public void setImageContent(String imageContent) {
 		this.imageContent = imageContent;
 	}
 

@@ -24,9 +24,6 @@ public class Guideline {
 	@Column(name = "guide_title")
 	private String guideTitle; 
 	
-	@Column(name = "guide_content")
-	private String guideContent;
-	
 	@OneToMany(mappedBy = "guideline",cascade = CascadeType.ALL)
 	private List<GuidelineContent> contents=new ArrayList<>();
 	
@@ -36,21 +33,18 @@ public class Guideline {
 	
 	public Guideline(String guideTitle, String guideContent) {
 		this.guideTitle = guideTitle;
-		this.guideContent = guideContent;
 	}
 
 
 	public Guideline(int guideId, String guideTitle, String guideContent) {
 		this.guideId = guideId;
 		this.guideTitle = guideTitle;
-		this.guideContent = guideContent;
 	}
 
 
 	public Guideline(int guideId, String guideTitle, String guideContent, List<GuidelineContent> contents) {
 		this.guideId = guideId;
 		this.guideTitle = guideTitle;
-		this.guideContent = guideContent;
 		this.contents = contents;
 	}
 
@@ -73,16 +67,5 @@ public class Guideline {
 	public void setGuideTitle(String guideTitle) {
 		this.guideTitle = guideTitle;
 	}
-
-
-	public String getGuideContent() {
-		return guideContent;
-	}
-
-
-	public void setGuideContent(String guideContent) {
-		this.guideContent = guideContent;
-	}
-
 
 }

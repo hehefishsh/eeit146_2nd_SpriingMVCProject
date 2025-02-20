@@ -55,7 +55,7 @@
 
         <!-- 如果是圖片 -->
         <p th:if="${content.contentType == 'image'}">
-            <img th:src="@{'/knowledge/image/' + ${content.id}}" alt="圖片">
+            <img th:src="@{${content.imageContent}}" alt="圖片">
         </p>
     </div>
         </th:block>

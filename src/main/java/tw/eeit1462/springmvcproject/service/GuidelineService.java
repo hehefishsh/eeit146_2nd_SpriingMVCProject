@@ -39,6 +39,5 @@ public class GuidelineService {
 	
 	public List<GuidelineContent> findContentById(Integer id){
 		return contentRepository.findByGuidelineGuideId(id);
-		
 	}
 }
