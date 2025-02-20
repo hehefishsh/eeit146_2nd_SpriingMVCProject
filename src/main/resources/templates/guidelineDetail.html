@@ -44,9 +44,20 @@
         </th:block>
         <th:block th:fragment="content">
             <h2 th:text="${guideline.guideTitle}"></h2>
-            <p th:text="${guideline.guideContent}"></p>
+<div th:each="content : ${contents}">
+        <!-- 如果是純文字 -->
+        <p th:if="${content.contentType == 'text'}" th:text="${content.textContent}"></p>
 
-            <a th:href="@{/guideline}">回智庫首頁</a>
+        <!-- 如果是超連結 -->
+        <p th:if="${content.contentType == 'link'}">
+            <a th:href="${content.textContent}" target="_blank" th:text="${content.textContent}"></a>
+        </p>
+
+        <!-- 如果是圖片 -->
+        <p th:if="${content.contentType == 'image'}">
+            <img th:src="@{${content.imageContent}}" alt="圖片">
+        </p>
+    </div>
         </th:block>
 
 
