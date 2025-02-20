@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import tw.eeit1462.springmvcproject.model.Employee;
 
-@Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	Optional<Employee> findByEmployeeName(String employeeName);
 }

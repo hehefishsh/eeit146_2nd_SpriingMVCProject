@@ -1,6 +1,7 @@
 package tw.eeit1462.springmvcproject.controller;
 
 import java.time.LocalDateTime;
+
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import tw.eeit1462.springmvcproject.model.Employee;
-import tw.eeit1462.springmvcproject.service.AttendanceLogsService;
+import tw.eeit1462.springmvcproject.service.ClockService;
 
 @Controller
 public class ClockController {
 
     @Autowired
-    private AttendanceLogsService attendanceLogsService;
+    private ClockService clockService;
 
     @GetMapping("/clock")
     public String showClockPage(Model model) {
@@ -53,7 +54,7 @@ public class ClockController {
 
         // 執行打卡邏輯，並捕獲異常
         try {
-            String exceptionMessage = attendanceLogsService.clockInOrOut(employeeId, clockTypeId);
+            String exceptionMessage = clockService.clockInOrOut(employeeId, clockTypeId);
             if(exceptionMessage=="重複打卡") {
             	redirectAttributes.addFlashAttribute("errorMessage", exceptionMessage);
             }else if(exceptionMessage!=null){
