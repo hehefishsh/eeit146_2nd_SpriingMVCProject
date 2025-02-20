@@ -43,23 +43,35 @@
 </th:block>
 <th:block th:fragment="content">
 <!-- 輸入頁面內容 -->
-<table border="1">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>標題</th>
-					</tr>
-				</thead>
-				<tbody>
-					<!-- 使用 th:each 循環顯示每個項目 -->
-					<tr th:each="guideline : ${allGuideline}">
-						<td th:text="${guideline.guideId}"></td>
-						<td><a th:href="@{/guideline/detail/{id}(id=${guideline.guideId})}" th:text="${guideline.guideTitle}"></a></td>
-					</tr>
-				</tbody>
-			</table>
-			
-</th:block>
+			<div class="card card-default" id="page-views">
+				<div class="card-header">
+					<h2>相關資源</h2>
+				</div>
+				<div class="card-body py-0" data-simplebar>
+					<div th:if="${allGuideline}">
+						<table class="table table-borderless table-thead-border">
+							<thead>
+								<tr>
+									<th class="text">ID</th>
+									<th class="text">標題</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="guideline : ${allGuideline}">
+									<td class="text" th:text="${guideline.guideId}"></td>
+									<td class="text"><a
+										th:href="@{/guideline/detail/{id}(id=${guideline.guideId})}"
+										class="badge badge-square badge-outline-primary"
+										th:text="${guideline.guideTitle}"></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="bg-white py-4"></div>
+			</div>
+
+		</th:block>
 
 
 </div>
