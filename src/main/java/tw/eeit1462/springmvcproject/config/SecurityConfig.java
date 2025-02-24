@@ -20,8 +20,9 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	    http
 	        .authorizeHttpRequests(auth -> auth
+						.requestMatchers("/employeemanagement").hasRole("MEMBER")
 	            .requestMatchers("/login", "/css/**", "/js/**").permitAll() // 允許所有人訪問登入頁面和靜態資源
-	            .requestMatchers("/employeemanagement", "/guideline", "/meetingroom", "/bulletin").authenticated() // 需要登入才能訪問的頁面
+						.requestMatchers("/guideline", "/meetingroom", "/bulletin").authenticated() // 需要登入才能訪問的頁面
 	            .anyRequest().authenticated() // 其他所有請求需要認證
 	        )
 	        .formLogin(form -> form
@@ -42,9 +43,28 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(EmployeeRepository employeeRepository) {
-		return employeeId -> employeeRepository.findById(Integer.valueOf(employeeId))
-				.orElseThrow(() -> new UsernameNotFoundException("用戶未找到: " + employeeId));
+		return employeeName -> employeeRepository.findByEmployeeName(employeeName)
+				.orElseThrow(() -> new UsernameNotFoundException("用戶未找到: " + employeeName));
     }
+
+//    @Bean
+//	@Transactional
+//	public UserDetailsService userDetailsService(EmployeeRepository employeeRepository) {
+//		return employeeId -> {
+//			Employee employee = employeeRepository.findById(Integer.valueOf(employeeId))
+//					.orElseThrow(() -> new UsernameNotFoundException("用戶未找到: " + employeeId));
+//
+//			employee.getRoles().size();
+//			// 把員工的角色轉成 Spring Security 需要的格式
+//			List<GrantedAuthority> authorities = employee.getRoles().stream()
+//					.map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName())) // Spring Security 需要加
+//																							// "ROLE_"
+//					.collect(Collectors.toList());
+//
+//			return new org.springframework.security.core.userdetails.User(employee.getEmployeeName(), // 用員工名稱當作登入帳號
+//					employee.getPassword(), authorities);
+//		};
+//	}
 
     @Bean
     public PasswordEncoder passwordEncoder() {

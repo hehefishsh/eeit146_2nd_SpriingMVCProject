@@ -1,6 +1,8 @@
 package tw.eeit1462.springmvcproject.model;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -43,6 +46,9 @@ public class Employee implements UserDetails {
     @JoinColumn(name = "status_id")
     private Status status;
 
+	@ManyToMany(mappedBy = "employee")
+	private List<Roles> roles = new LinkedList<Roles>();
+
 	public Employee() {
 		super();
 	}
@@ -59,8 +65,20 @@ public class Employee implements UserDetails {
 
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList(); // 暫時不需要角色權限
+		return Collections.emptyList(); // 暫時不需要角色權限
     }
+
+//	@Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//		List<GrantedAuthority> authorities = new ArrayList<>();
+//
+//		// 假設 employee 是當前用戶的 Employee 物件，並且有 roles 集合
+//		for (Roles role : employee.getRoles()) {
+//			authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName())); // 角色名稱加上 "ROLE_" 前綴
+//		}
+//
+//		return authorities;
+//    }
 
     @Override
     public String getUsername() {
@@ -150,6 +168,14 @@ public class Employee implements UserDetails {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Roles> roles) {
+		this.roles = roles;
 	}
 	
 }
