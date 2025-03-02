@@ -2,59 +2,92 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>會議室預約</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- FAVICON -->
+<link href="/images/favicon.svg" rel="shortcut icon" />
 
-    <!-- CSS 樣式 -->
-    <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+<title>會議室預約</title>
+
+<!-- CSS 樣式 -->
+<link
+	href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body class="navbar-fixed sidebar-fixed" id="body">
-    <div th:replace="~{headerAndLeftside.html(pageHtml='meetingroom')}">
-        <th:block th:fragment="contentTitle">
-            <h2>會議室預約</h2>
-        </th:block>
-        <th:block th:fragment="content">
-            <form th:action="@{/meetings/save}" method="post" class="form-group" th:object="${meeting}">
-                <div class="form-group">
-                    <label for="employee">預約人</label>
-                    <select id="employee" class="form-control rounded-0" th:field="*{employee}" required>
-                        <option th:each="employee : ${employees}" th:value="${employee.employeeId}" th:text="${employee.employeeName}"></option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="room">會議室</label>
-                    <select id="room" class="form-control rounded-0" th:field="*{room}" required>
-                        <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.roomName}"></option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="startTime">開始時間</label>
-                    <input type="datetime-local" id="startTime" class="form-control rounded-0" th:field="*{startTime}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="endTime">結束時間</label>
-                    <input type="datetime-local" id="endTime" class="form-control rounded-0" th:field="*{endTime}" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="notes">備註</label>
-                    <input type="text" id="notes" class="form-control rounded-0" th:field="*{notes}">
-                </div>
-
-                <div class="form-footer">
-					<button type="submit" class="btn btn-secondary btn-pill">Submit</button>
-					<button type="submit" class="btn btn-light btn-pill">Cancel</button>
+	<div th:replace="~{headerAndLeftside.html(pageHtml='meetingroom')}">
+		<th:block th:fragment="contentTitle">
+			<h2>會議室預約</h2>
+		</th:block>
+		<th:block th:fragment="content">
+			<form th:action="@{/meetings/save}" method="post" class="form-group"
+				th:object="${meeting}">
+				<div class="form-group">
+					<label for="employee">預約人</label> <select id="employee"
+						class="form-control rounded-0" th:field="*{employee}" required>
+						<option th:each="employee : ${employees}"
+							th:value="${employee.employeeId}"
+							th:text="${employee.employeeName}"></option>
+					</select>
 				</div>
-            </form>
-        </th:block>
-    </div>
+
+				<div class="form-group">
+					<label for="room">會議室</label> <select id="room"
+						class="form-control rounded-0" th:field="*{room}" required>
+						<option th:each="room : ${rooms}" th:value="${room.id}"
+							th:text="${room.roomName}"></option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label for="startTime">開始時間</label> <input type="datetime-local"
+						id="startTime" class="form-control rounded-0"
+						th:field="*{startTime}" required onchange="updateEndTime()">
+				</div>
+
+				<div class="form-group">
+					<label for="endTime">結束時間</label> <input type="datetime-local"
+						id="endTime" class="form-control rounded-0" th:field="*{endTime}"
+						required>
+				</div>
+
+				<div class="form-group">
+					<label for="notes">備註</label> <input type="text" id="notes"
+						class="form-control rounded-0" th:field="*{notes}">
+				</div>
+
+				<div class="form-footer">
+					<button type="submit" class="btn btn-secondary btn-pill">Submit</button>
+					<button type="button" onclick="goBack()"
+						class="btn btn-light btn-pill">Cancel</button>
+				</div>
+			</form>
+		</th:block>
+	</div>
+
+	<script>
+		function goBack() {
+			window.history.back();
+		}
+
+
+        function updateEndTime() {
+            const startTimeInput = document.getElementById('startTime');
+            const endTimeInput = document.getElementById('endTime');
+
+            if (startTimeInput.value) {
+                const startDate = new Date(startTimeInput.value);
+                const endDate = new Date(startDate);
+                endDate.setHours(startDate.getHours() + 9); // 預設結束時間為開始時間加一小時
+
+                // 更新結束時間的日期為開始時間的日期
+                endTimeInput.value = endDate.toISOString().slice(0, 16); // 格式化為 datetime-local 所需的格式
+            }
+        }
+	</script>
 </body>
 
 </html>

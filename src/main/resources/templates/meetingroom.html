@@ -34,61 +34,46 @@
 		</th:block>
 
 		<th:block th:fragment="content">
-			<div class="content-wrapper">
-				<div class="card">
-					<br><h3>會議室預約</h3><br>
-
-					<!-- 顯示錯誤訊息 -->
-					<div th:if="${errorMessage}">
-						<div class="alert alert-danger" th:text="${errorMessage}"></div>
-					</div>
-
-					<!-- 顯示成功訊息 -->
-					<div th:if="${message}">
-						<div class="alert alert-success" th:text="${message}"></div>
-					</div>
-
-					<!-- 會議室表格 -->
-					<div class="table-container">
-						<table class="table">
+			<div class="card card-default" id="page-views">
+				<div class="card-header">
+					<h2>會議室管理</h2>
+					<a th:href="@{/meetings/new}" class="btn btn-primary btn-pill">預約會議室</a>
+				</div>
+				<div class="card-body py-0" data-simplebar>
+					<div th:if="${meetings}">
+						<table class="table table-borderless table-thead-border">
 							<thead>
 								<tr>
-									<th>預約人</th>
-									<th>會議室</th>
-									<th>開始時間</th>
-									<th>結束時間</th>
-									<th>備註</th>
-									<th>操作</th>
+									<th class="text">預約人</th>
+									<th class="text">會議室</th>
+									<th class="text">開始時間</th>
+									<th class="text">結束時間</th>
+									<th class="text">備註</th>
+									<th class="text">操作</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:each="meeting : ${meetings}">
-									<td th:text="${meeting.employee.employeeName}"></td>
+									<td class="text" th:text="${meeting.employee.employeeName}"></td>
 									<!-- 預約人 -->
-									<td th:text="${meeting.room.roomName}"></td>
+									<td class="text" th:text="${meeting.room.roomName}"></td>
 									<!-- 會議室名稱 -->
-									<td class="time-column"
+									<td class="time-column text"
 										th:text="${#temporals.format(meeting.startTime, 'yyyy-MM-dd HH:mm')}"></td>
 									<!-- 開始時間 -->
-									<td class="time-column"
+									<td class="time-column text"
 										th:text="${#temporals.format(meeting.endTime, 'yyyy-MM-dd HH:mm')}"></td>
 									<!-- 結束時間 -->
-									<td class="note-column" th:text="${meeting.notes}"></td>
+									<td class="note-column text" th:text="${meeting.notes}"></td>
 									<!-- 備註 -->
-									<td class="btn-group"> <a
-										class="btn btn-danger btn-sm"
+									<td class="btn-group"><a class="btn btn-danger btn-sm" style="color: white"
 										th:href="@{/meetings/delete/{id}(id=${meeting.id})}">刪除</a></td>
 								</tr>
-
 							</tbody>
 						</table>
 					</div>
-
-
-					<!-- 新增會議室按鈕 -->
-					<a class="btn btn-success" href="/meetings/new" style="background-color: #A070E0; border-color: purple;">預約會議室</a>
-
 				</div>
+				<div class="bg-white py-4"></div>
 			</div>
 		</th:block>
 	</div>
