@@ -93,7 +93,7 @@
 								</thead>
 								<tbody>
 									<tr th:each="log : ${todayAttendance.attendanceLogs}">
-										<td class="text" th:text="${log.clockTime}"></td>
+										<td class="text" th:text="${#temporals.format(log.clockTime, 'yyyy 年 MM 月 dd 日 HH:mm:ss EEEE')}"></td>
 										<td class="text" th:text="${log.clockType.typeName}"></td>
 									</tr>
 								</tbody>
@@ -113,7 +113,7 @@
 										th:each="violation : ${todayAttendance.attendanceViolations}">
 										<td class="text" th:text="${violation.violationType.typeName}"></td>
 										<td class="text" th:text="${violation.violationMinutes}"></td>
-										<td class="text" th:text="${violation.createdAt}"></td>
+										<td class="text" th:text="${#temporals.format(violation.createdAt, 'yyyy 年 MM 月 dd 日 HH:mm:ss EEEE')}"></td>
 									</tr>
 								</tbody>
 							</table>
